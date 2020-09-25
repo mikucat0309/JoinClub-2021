@@ -1,0 +1,175 @@
+{% if messages %}
+    {% for message in messages %}
+        {% comment %} 茶會調查表單提交成功 {% endcomment %}
+        {% ifequal message.tags "attendform success" %}
+            <!-- 茶會表查表單提交成功訊息 -->
+            <div class="modal fade text-left text-dark" id="attendModal" tabindex="-1" role="dialog" aria-labelledby="attendModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="attendModalTitle">{{ message }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ol>
+                                <li>茶會時間為 2020/09/21</li>
+                                <li>18:30 開始入場，19:00 準時開始</li>
+                                <li>當天要入社者請攜帶 400 元社費及學生證</li>
+                            </ol>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">
+                                <i class="fas fa-kiss-wink-heart"></i>
+                                確認
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $('#attendModal').modal();
+            </script>
+        {% endifequal %}
+
+        {% comment %} 入社表單提交成功 {% endcomment %}
+        {% ifequal message.tags "joinform success" %}
+            <!-- 入社表單提交成功訊息 -->
+            <div class="modal fade" id="joinModal" tabindex="-1" role="dialog" aria-labelledby="joinModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="joinModalTitle">{{ message }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ol>
+                            　<li>請準備社費 400 元及學生證，至櫃台交給事務確認</li>
+                            　<li>若您不小心填寫錯誤資訊，請至櫃檯找事務更正，您無法自己更改資訊</li>
+                            </ol>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">
+                                <i class="fas fa-kiss-wink-heart"></i>
+                                確認
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $('#joinModal').modal();
+            </script>
+        {% endifequal %}
+
+        {% comment %} 茶會表單調查結束 {% endcomment %}
+        {% ifequal message.tags "teatimeform info" %}
+            <!-- 表單已結束提交 -->
+            <div class="modal fade text-left text-dark" id="teatimeformModal" tabindex="-1" role="dialog" aria-labelledby="teatimeformModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="teatimeformModalTitle">{{ message }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ol>
+                            　  <li>茶會時間為 2019/09/21</li>
+                                <li>18:30 開始入場，19:00 準時開始</li>
+                                <li>當天要入社者請攜帶 400 元社費及學生證</li>
+                                <li>有任何問題請洽<a class="text-primary" href="https://www.facebook.com/HackerSir.tw/" target="_blank">逢甲大學黑課社粉專</a></li>
+                            </ol>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">
+                                <i class="far fa-kiss-wink-heart"></i>
+                                確認
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $('#teatimeformModal').modal();
+            </script>
+        {% endifequal %}
+
+        {% comment %} 茶會尚未開始 {% endcomment %}
+        {% ifequal message.tags "yetstart info" %}
+            <!-- 茶會尚未開始 -->
+            <div class="modal fade text-left text-dark" id="yetstartModal" tabindex="-1" role="dialog" aria-labelledby="yetstartModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="yetstartModalTitle">{{ message }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ol>
+                            　  <li>茶會時間為 2020/09/21</li>
+                                <li>18:30 開始入場，19:00 準時開始</li>
+                                <li>當天要入社者請攜帶 400 元社費及學生證</li>
+                                <li>無聊的話玩個<a class="text-primary" href="https://bot.k139.me/" target="_blank">Bot</a>吧</li>
+                                <li>有任何問題請洽<a class="text-primary" href="https://www.facebook.com/HackerSir.tw/" target="_blank">逢甲大學黑課社粉專</a></li>
+                            </ol>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">
+                                <i class="far fa-kiss-wink-heart"></i>
+                                確認
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $('#yetstartModal').modal();
+            </script>
+        {% endifequal %}
+
+        {% comment %} 茶會開始，茶會調查轉址 {% endcomment %}
+        {% ifequal message.tags "teatimestart info" %}
+            <!-- 茶會開始，茶會調查轉址 -->
+            <div class="modal fade text-left text-dark" id="teatimestartModal" tabindex="-1" role="dialog" aria-labelledby="teatimestartModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="teatimestartModalTitle">{{ message }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ol>
+                                <li>要入社者請攜帶 400 元社費及學生證，至櫃台找事務登記</li>
+                                <li>無聊的話玩個<a class="text-primary" href="https://bot.k139.me/" target="_blank">Bot</a>吧</li>
+                                <li>有任何問題請洽工作人員</li>
+                            </ol>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                <i class="far fa-kiss-wink-heart"></i>
+                                確認
+                            </button>
+                            <a class="btn btn-success" href="{% url 'join:join' %}" role="button">
+                                <i class="fas fa-donate"></i>
+                                點我入社
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $('#teatimestartModal').modal();
+            </script>
+        {% endifequal %}
+
+    {% endfor %}
+{% endif %}

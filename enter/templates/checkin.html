@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+{% endblock %}
+
+{% block title %}黑客社 - 茶會簽到{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row d-flex justify-content-between">
+        <div class="col-auto">
+            <h3>茶會簽到</h3>
+        </div>
+    </div>
+    <hr>
+
+    {% comment %} 錯誤訊息 {% endcomment %}
+    {% if form.nid.errors %}
+        {% for error in form.nid.errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ error }} <a href="{% url 'enter:prize' nid=form.nid.value %}" class="alert-link">點此前往領獎頁面</a>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form action="{% url 'enter:checkin' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-row align-items-center">
+            <div class="col-auto mr-4">
+                <label class="sr-only" for="id_nid">NID</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">學號</div>
+                    </div>
+                    {{ form.nid }}
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-user-edit"></i>
+                            簽到
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

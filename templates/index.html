@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+{% endblock %}
+
+{% block title %}黑客社{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>社群媒體</h3>
+    <hr>
+    <div class="row">
+        <!-- Facebook -->
+        <div class="col-sm-4 my-2">
+            <div class="card bg-primary text-white">
+                <span class="fab fa-facebook-f" style="font-size: 15rem;"></span>
+                <div class="card-img-overlay" onclick="javascript:window.open('https://www.facebook.com/HackerSir.tw/')"></div>
+            </div>
+        </div>
+        <!-- Instagram -->
+        <div class="col-sm-4 my-2">
+            <div class="card bg-danger text-white">
+                <span class="fab fa-instagram" style="font-size: 15rem;"></span>
+                <div class="card-img-overlay" onclick="javascript:window.open('https://www.instagram.com/fcu_hackersir/')"></div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h3>開源系統</h3>
+    <hr>
+    <div class="row">
+        <!-- 社博打卡 -->
+        <div class="col-sm-4 my-2">
+            <div class="card bg-secondary text-white">
+                <span class="fas fa-map-marked-alt" style="font-size: 15rem;"></span>
+                <div class="card-img-overlay" onclick="javascript:window.open('https://checkin.hackersir.org')"></div>
+            </div>
+        </div>
+        <!-- 學生會開票 -->
+        <div class="col-sm-4 my-2">
+            <div class="card bg-warning text-white">
+                <span class="fas fa-vote-yea" style="font-size: 15rem;"></span>
+                <div class="card-img-overlay" onclick="javascript:window.open('https://voting.hackersir.org/')"></div>
+            </div>
+        </div>
+        <!-- GitHub -->
+        <div class="col-sm-4 my-2">
+            <div class="card text-white bg-dark">
+                <span class="fab fa-github" style="font-size: 15rem;"></span>
+                <div class="card-img-overlay" onclick="javascript:window.open('https://github.com/HackerSir/')"></div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h3>活動介紹</h3>
+    <hr>
+    <div class="row">
+        <!-- 活動 -->
+        <div class="col-sm-4 my-2">
+            <div class="card bg-info text-white">
+                <span class="fas fa-chalkboard-teacher" style="font-size: 15rem;"></span>
+                <div class="card-img-overlay" onclick="javascript:window.open('https://act.hackersir.org/')"></div>
+            </div>
+        </div>
+        <!-- 課程 -->
+        <div class="col-sm-4 my-2">
+            <div class="card bg-primary text-white">
+                <span class="fas fa-graduation-cap" style="font-size: 15rem;"></span>
+                <div class="card-img-overlay" onclick="javascript:window.location = '{% url 'course' %}'"></div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h3>社博遊戲</h3>
+    <hr>
+    <div class="row">
+        <!-- Bot -->
+        <div class="col-sm-4 my-2">
+            <div class="card bg-success text-white">
+                <span class="fas fa-robot" style="font-size: 15rem;"></span>
+                <div class="card-img-overlay" onclick="javascript:window.open('https://bot.k139.me')"></div>
+            </div>
+        </div>
+        <!-- 知識王 -->
+        <div class="col-sm-4 my-2">
+            <div class="card bg-warning text-white">
+                <span class="far fa-lightbulb" style="font-size: 15rem;"></span>
+                <div class="card-img-overlay" onclick="javascript:window.open('https://king.hackersir.org/')"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block title %}黑客社 - 領獎情形{% endblock %}
+
+{% block content %}
+<div class="container" id="content">
+    <div class="row">
+        <div class="col-sm-6 my-2">
+            <div class="card text-center border-info">
+                <div class="card-header">
+                    <h4 class="my-0">與會人數</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title" id="Checkin_count"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 my-2">
+            <div class="card text-center border-success">
+                <div class="card-header">
+                    <h4 class="my-0">已領獎</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title" id="Prize_count"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div id="chart"></div>
+</div>
+{% endblock %}
+
+{% block js %}
+<!-- Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script type="text/javascript">
+    var interval = null;
+
+    $(document).ready(function ($) {
+        refresh();
+        interval = setInterval("refresh()", 10000);
+    });
+
+    function refresh() {
+        $.ajax({
+            url: "{% url 'api:receiveprizedata' %}",
+            type: "get",
+            dataType:  "json",
+            success: function(data) {
+                document.getElementById("Checkin_count").innerHTML = data["Checkin_count"];
+                document.getElementById("Prize_count").innerHTML = data["Prize_count"];
+                var one = data["Checkin_count"] - data["Prize_count"]
+                var data = [{
+                    values: [one, data["Prize_count"]],
+                    labels: ['未領獎', '已領獎'],
+                    type: 'pie'
+                }];
+                var layout = {
+                    title: '領獎情形',
+                };
+                Plotly.newPlot('chart', data, layout, {responsive: true});
+            },
+            error: function() {
+                clearInterval(interval);
+                var alert =  '<div class="alert alert-danger alert-dismissible fade show" role="alert">'+
+                                '<h4 class="alert-heading">發生錯誤</h4>'+
+                                '<p>無法更新資訊，請檢查您的網路狀態</p>'+
+                                '<p>或是<a href="javascript:location.reload(true)" class="alert-link">點此重新整理您的頁面</a></p>'+
+                                '<hr>'+
+                                '<p>'+
+                                    '若無法解決，請聯絡<big><a href="https://www.facebook.com/HackerSir.tw/" target="_blank">逢甲大學黑客社</a></big>，並闡述您所遭遇的狀況。'+
+                                '</p>'+
+                                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+                                    '<span aria-hidden="true">&times;</span>'+
+                                '</button>'+
+                            '</div>';
+                document.getElementById("content").insertAdjacentHTML('afterbegin', alert);
+            }
+        });
+    }
+</script>
+{% endblock %}

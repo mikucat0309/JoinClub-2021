@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+{% endblock %}
+
+{% block title %}黑客社 - 查詢(茶會調查){% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row d-flex justify-content-between">
+        <div class="col-auto">
+            <h3>茶會調查 - 查詢</h3>
+        </div>
+        <div class="btn-group col-auto">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                匯出 CSV
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'chart:export_all' %}">全部</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'chart:export_M' %}">已繳費</a>
+                <a class="dropdown-item" href="{% url 'chart:export_NP' %}">未繳費</a>
+            </div>
+        </div>
+    </div>
+    
+    <hr>
+    <form action="{% url 'enter:search' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-row align-items-center">
+            <div class="col-auto mr-4">
+                <label class="sr-only" for="nid">NID</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">學號</div>
+                    </div>
+                    <input type="text" class="form-control" id="nid" placeholder="請輸入欲查詢學號" name="nid">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-search"></i>
+                            查詢
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto my-4">
+                <label class="sr-only" for="name">Name</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">姓名</div>
+                    </div>
+                    <input type="text" class="form-control" id="name" placeholder="請輸入欲查詢姓名" name="name">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-search"></i>
+                            查詢
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% if attend %}
+    <hr>
+    <div class="card">
+        <h5 class="card-header">
+            <div class="row justify-content-between">
+                <div class="col-auto">
+                    {{ attend.nid }} - 茶會出席資料
+                </div>
+            </div>
+        </h5>
+        <div class="card-body">
+            <p class="card-text">姓名：{{ attend.name }}</p>
+            <p class="card-text">學號：{{ attend.nid }}</p>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'enter:edit' id=attend.id %}" class="btn btn-primary" role="button">
+                <i class="far fa-edit"></i>
+                修改資料
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+{% endblock %}
+
+{% block title %}黑客社 - 入社表單{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>入社表單</h3>
+    <hr>
+    <form action="{% url 'join:join' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.nid.label_tag }}
+            {{ form.nid }}
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.nid.errors %}
+                {% for error in form.nid.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.dept.label_tag }}
+            {{ form.dept }}
+            <small id="deptHelp" class="form-text text-muted">{{ form.dept.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.dept.errors %}
+                {% for error in form.dept.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.level.label_tag }}
+            {{ form.level }}
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.level.errors %}
+                {% for error in form.level.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.phone.label_tag }}
+            {{ form.phone }}
+            <small id="phoneHelp" class="form-text text-muted">{{ form.phone.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.phone.errors %}
+                {% for error in form.phone.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            <small id="emailHelp" class="form-text text-muted">{{ form.email.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="custom-control custom-checkbox my-3">
+            <input type="checkbox" class="custom-control-input" id="privacy" name="privacy" required>
+            <label class="custom-control-label" for="privacy" style="color:red">本人同意將個人資料提供逢甲大學黑客社使用，本社依個人資料保護法、相關法規及學校相關法規進行處理以及利用。</label>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            <i class="far fa-check-circle"></i>
+            提交
+        </button>
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#joinModal">
+            <i class="fab fa-readme"></i>
+            點我再次閱讀注意事項
+        </button>
+    </form>
+    
+    <!-- 入社表單注意事項 -->
+    <div class="modal fade" id="joinModal" tabindex="-1" role="dialog" aria-labelledby="joinModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="joinModalTitle">入社表單填寫注意事項</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ol>
+                    　<li>除了電話號碼外其他欄位都是必填</li>
+                    　<li>請填寫完正確資料，送出表單後，至櫃台將您的學生證交給事務，確認完您的個人資料後，繳交社費 400 元後，即可入社</li>
+                    　<li>若您不小心填寫錯誤資訊，請至櫃檯找事務更正，您無法自己更改資訊</li>
+                    </ol>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">
+                        <i class="fas fa-book"></i>
+                        我已閱讀完注意事項
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    $('#joinModal').modal();
+
+    {% if form.name.errors %}
+        document.getElementById("id_name").classList.add("is-invalid");
+    {% endif %}
+    {% if form.nid.errors %}
+        document.getElementById("id_nid").classList.add("is-invalid");
+    {% endif %}
+    {% if form.dept.errors %}
+        document.getElementById("id_dept").classList.add("is-invalid");
+    {% endif %}
+    {% if form.level.errors %}
+        document.getElementById("id_level").classList.add("is-invalid");
+    {% endif %}
+    {% if form.phone.errors %}
+        document.getElementById("id_phone").classList.add("is-invalid");
+    {% endif %}
+    {% if form.email.errors %}
+        document.getElementById("id_email").classList.add("is-invalid");
+    {% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% include "favicon.html" %}
+        {% include "ga.html" %}
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <style>
+            a,
+            a:focus,
+            a:hover {
+                color: #fff;
+            }
+
+            .btn-secondary,
+            .btn-secondary:hover,
+            .btn-secondary:focus {
+                color: #333;
+                text-shadow: none; /* Prevent inheritance from `body` */
+                background-color: #fff;
+                border: .05rem solid #fff;
+            }
+
+            html,
+            body {
+                height: 100%;
+                background-color: #333;
+            }
+
+            body {
+                display: -ms-flexbox;
+                display: flex;
+                color: #fff;
+                text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+                box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+            }
+
+            .cover-container {
+                max-width: 42em;
+            }
+
+            .masthead {
+                margin-bottom: 2rem;
+            }
+
+            .masthead-brand {
+                margin-bottom: 0;
+            }
+
+            .nav-masthead .nav-link {
+                padding: .25rem 0;
+                font-weight: 700;
+                color: rgba(255, 255, 255, .5);
+                background-color: transparent;
+                border-bottom: .25rem solid transparent;
+            }
+
+            .nav-masthead .nav-link:hover,
+            .nav-masthead .nav-link:focus {
+                border-bottom-color: rgba(255, 255, 255, .25);
+            }
+
+            .nav-masthead .nav-link + .nav-link {
+                margin-left: 1rem;
+            }
+
+            .nav-masthead .active {
+                color: #fff;
+                border-bottom-color: #fff;
+            }
+
+            @media (min-width: 48em) {
+                .masthead-brand {
+                    float: left;
+                }
+                .nav-masthead {
+                    float: right;
+                }
+            }
+
+            .cover {
+                padding: 0 1.5rem;
+            }
+
+            .cover .btn-lg {
+                padding: .75rem 1.25rem;
+                font-weight: 700;
+            }
+
+            .mastfoot {
+                color: rgba(255, 255, 255, .5);
+            }
+        </style>
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+
+        <title>黑客社 - Comming Soon</title>
+    </head>
+
+    <body class="text-center">
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <header class="masthead mb-auto">
+                <div class="inner">
+                    <h3 class="masthead-brand">HackerSir</h3>
+                    <nav class="nav nav-masthead justify-content-center">
+                        <a class="nav-link active" onclick="javascript:outline()">議程</a>
+                        <a class="nav-link active" onclick="javascript:tealocation()">地點</a>
+                        <a class="nav-link active" onclick="javascript:qrcode()">QRcode</a>
+                        <a class="nav-link active" onclick="javascript:rule()">服務條款</a>
+                    </nav>
+                </div>
+            </header>
+            <main role="main" class="inner cover">
+                <h1 class="cover-heading">COMING SOON</h1>
+                <h1 class="cover-heading">新生茶會</h1>
+                <p class="lead">2020/09/21 18：30 ~ 21：00</p>
+                <p class="lead">資電B22</p>
+                <p class="lead" id="btn"></p>
+                <p class="lead" id="time"></p>
+            </main>
+            <footer class="mastfoot mt-auto">
+                <div class="inner">
+                    <span class="fab fa-facebook-square text-primary mr-2" style="font-size: 3rem;" onclick="javascript:window.open('https://www.facebook.com/HackerSir.tw/')"></span>
+                    <span class="fab fa-instagram text-danger mr-2" style="font-size: 3rem;" onclick="javascript:window.open('https://www.instagram.com/fcu_hackersir/')"></span>
+                </div>
+                <div class="inner my-2">
+                    <span class="badge badge-secondary">
+                        <h3>
+                            <i class="fas fa-users mr-2"></i>填表人數：<span id="people"></span>
+                        </h3>
+                    </span>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <!-- 倒數時間 -->
+        <script type="text/javascript">
+            // Set the date we're counting down to
+            var teatime = new Date("September 17, 2019 18:30:00").getTime(); //茶會開始時間(結束倒數)
+            var survey = new Date("September 16, 2019 23:50:00").getTime(); //茶會調查結束時間
+
+            var x = setInterval(function() {
+                var now = new Date().getTime();
+
+                if (survey - now < 0) { // 茶會調查表單結束提交
+                    document.getElementById("btn").innerHTML = '<button class="btn btn-lg btn-success" disabled>'+
+                                                                    '<i class="fas fa-pray mr-1"></i>'+
+                                                                    '茶會出席調查結束'+
+                                                                '</button>';
+                    var distance = teatime - now;
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("btn").innerHTML = '<a href="{% url 'join:join' %}" class="btn btn-lg btn-success">'+
+                                                                        '<i class="fas fa-running mr-1"></i>'+
+                                                                        '前往入社'+
+                                                                    '</a>';
+                        document.getElementById("time").innerHTML = '';
+                    } else {
+                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        document.getElementById("time").innerHTML = "茶會倒數<br>" + days + "天 " + hours + "時 " + minutes + "分 " + seconds + "秒 ";
+                    }
+                } else { // 茶會調查表單尚未結束提交
+                    document.getElementById("btn").innerHTML = '<a href="{% url 'enter:attend' %}" class="btn btn-lg btn-success">'+
+                                                                    '<i class="fas fa-pray mr-1"></i>'+
+                                                                    '茶會出席調查'+
+                                                                '</a>';
+                    var distance = survey - now;
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    document.getElementById("time").innerHTML = "出席調查倒數<br>" + days + "天 " + hours + "時 " + minutes + "分 " + seconds + "秒 ";
+                }
+            }, 1000);
+        </script>
+
+        <script type="text/javascript">
+            var interval = null;
+            $(document).ready(function ($) {
+                refresh();
+                interval = setInterval("refresh()", 60000); //60秒
+            });
+            function refresh() {
+                $.ajax({
+                    url: "{% url 'api:comingsoondata' %}",
+                    type: "get",
+                    dataType:  "json",
+                    success: function(data) {
+                        document.getElementById("people").innerHTML = data["Attend_count"];
+                    }
+                });
+            }
+        </script>
+
+        <!-- 議程 Modal -->
+        <div class="modal fade text-left text-dark" id="outlineModal" tabindex="-1" role="dialog" aria-labelledby="outlineModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="outlineModalTitle">議程</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>18:30 - 19:00 入場</p>
+                        <p>19:00 - 19:05 開場影片</p>
+                        <p>19:05 - 19:15 AIoT 環境空間介紹</p>
+                        <p>19:17 - 19:25 社團介紹</p>
+                        <p>19:25 - 19:30 幹部介紹</p>
+                        <p>19:30 - 19:35 課程規劃</p>
+                        <p>19:35 - 19:45 黑科技介紹 從遊戲外掛中談資安技術</p>
+                        <p>19:45 - 19:50 年度活動預告</p>
+                        <p>19:50 - 19:55 大合照</p>
+                        <p>19:55 - 20:30 入社申請 & 茶敘</p>
+                        <p>20:30 - 20:40 黑科技介紹 按鍵精靈與網頁爬蟲的異曲同工之妙</p>
+                        <p>20:40 - 20:50 黑科技介紹 駭客思維運用於現實中的秘訣與注意事項</p>
+                        <p>20:50 - 20:55 友社宣傳</p>
+                        <p>20:55 - 21:10 END</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">
+                            <i class="far fa-thumbs-up"></i>
+                            確認
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rule Modal -->
+        <div class="modal fade text-left text-dark" id="ruleModal" tabindex="-1" role="dialog" aria-labelledby="ruleModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ruleModalTitle">服務條款</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ol>
+                            <li>您不得「干擾」或「影響」本站的運行，若經發現，本站有權終止您的使用</li>
+                            <li>本站會儲存使用者的資料，所有資料僅供本社入社申請核對使用，您可以要求刪除您的資料，但此舉將會影響您的社員權益</li>
+                            <li>本站圖表之資料由使用者在本站所填之資料及<a class="text-primary" href="https://checkin.hackersir.org/" target="_blank">逢甲社博集點</a>之資料，所有資料皆不會對外提供，僅用於統計圖表展示</li>
+                        </ol> 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">
+                            <i class="far fa-thumbs-up"></i>
+                            確認
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QRcode Modal -->
+        <div class="modal fade text-left text-dark" id="qrcodeModal" tabindex="-1" role="dialog" aria-labelledby="qrcodeModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="qrcodeModalTitle">QRcode</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% include "qrcode.html" %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">
+                            <i class="far fa-thumbs-up"></i>
+                            確認
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 地點 Modal -->
+        <div class="modal fade text-left text-dark" id="tealocationModal" tabindex="-1" role="dialog" aria-labelledby="tealocationModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tealocationModalTitle">茶會地點</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% include "location.html" %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">
+                            <i class="far fa-thumbs-up"></i>
+                            確認
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            function outline() {
+                $('#outlineModal').modal();
+            } 
+            function tealocation() {
+                $('#tealocationModal').modal();
+            } 
+            function qrcode() {
+                $('#qrcodeModal').modal();
+            }
+            function rule() {
+                $('#ruleModal').modal();
+            }
+        </script>
+
+        {% include "message.html" %}
+    </body>
+</html>
+

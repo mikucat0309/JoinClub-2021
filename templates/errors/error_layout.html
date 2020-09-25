@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}黑客社 - 錯誤頁面{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading">發生錯誤!</h4>
+        <p>錯誤代碼：<code>{% block errorcode %}{% endblock %}</code></p>
+        <hr>
+        <p>
+            若您持續看到這個頁面，請聯絡<big><a href="https://www.facebook.com/HackerSir.tw/" target="_blank">逢甲大學黑客社</a></big>，並闡述您所遭遇的狀況。
+        </p>
+        <a href="{% url 'index' %}" class="btn btn-danger btn-lg btn-block">點我回首頁</a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+{% endblock %}

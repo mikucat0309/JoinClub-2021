@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+{% endblock %}
+
+{% block title %}黑客社 - 領獎{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>領獎</h3>
+    <hr>
+    <div class="card">
+        <h5 class="card-header">
+            <div class="row justify-content-between">
+                <div class="col-auto">
+                    {{ attend.nid }} - 資料
+                </div>
+                <div class="col-auto">
+                    {% comment %} 無法領獎 {% endcomment %}
+                    {% ifequal attend.status "NO" %}
+                        <span class="badge badge-pill badge-danger">
+                            {{ attend.get_status_display }}
+                        </span>
+                    {% endifequal %}
+                    {% comment %} 尚未領獎 {% endcomment %}
+                    {% ifequal attend.status "YET" %}
+                        <span class="badge badge-pill badge-warning">
+                            {{ attend.get_status_display }}
+                        </span>
+                    {% endifequal %}
+                    {% comment %} 已使用票券領獎 {% endcomment %}
+                    {% ifequal attend.status "TIX" %}
+                        <span class="badge badge-pill badge-success">
+                            {{ attend.get_status_display }}
+                        </span>
+                    {% endifequal %}
+                    {% comment %} 已填表單領獎 {% endcomment %}
+                    {% ifequal attend.status "FORM" %}
+                        <span class="badge badge-pill badge-success">
+                            {{ attend.get_status_display }}
+                        </span>
+                    {% endifequal %}
+                    {% comment %} 已填表單加使用票券領獎 {% endcomment %}
+                    {% ifequal attend.status "MIX" %}
+                        <span class="badge badge-pill badge-primary">
+                            {{ attend.get_status_display }}
+                        </span>
+                    {% endifequal %}
+                </div>
+            </div>
+        </h5>
+        <div class="card-body">
+            <p class="card-text">學號：{{ attend.nid }}</p>
+            <p class="card-text">領獎狀態：{{ attend.get_status_display }}</p>
+        </div>
+        <div class="card-footer">
+            <div class="row justify-content-between">
+                <form class="form-inline col-auto" action="{% url 'enter:prize' nid=attend.nid %}" method="POST">
+                    {% csrf_token %}
+                    {% comment %} 無法領獎 {% endcomment %}
+                    {% ifequal attend.status "NO" %}
+                        <button type="submit" class="btn btn-warning mr-1" name="tix">
+                            <i class="fas fa-tag"></i>
+                            使用票券領獎
+                        </button>
+                    {% endifequal %}
+                    {% comment %} 尚未領獎 {% endcomment %}
+                    {% ifequal attend.status "YET" %}
+                        <button type="submit" class="btn btn-success mr-1" name="confirm">
+                            <i class="fas fa-gift"></i>
+                            確認領獎
+                        </button>
+                        <button type="submit" class="btn btn-info mr-1" name="mix">
+                            <i class="fas fa-hand-holding-heart"></i>
+                            確認領獎加有帶票券
+                        </button>
+                    {% endifequal %}
+                </form>
+                <a href="{% url 'enter:checkin' %}" class="btn btn-primary col-auto" role="button">
+                    <i class="fas fa-reply"></i>
+                    返回簽到頁面
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

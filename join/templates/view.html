@@ -1,0 +1,170 @@
+{% extends "layout.html" %}
+
+{% block title %}黑客社 - 總覽{% endblock %}
+
+{% block content %}
+<div class="container">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link" id="M-tab" data-toggle="tab" href="#M" role="tab" aria-controls="M" aria-selected="false">已入社</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="NP-tab" data-toggle="tab" href="#NP" role="tab" aria-controls="NP" aria-selected="false">未付款</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" id="UR-tab" data-toggle="tab" href="#UR" role="tab" aria-controls="UR" aria-selected="true">審核中</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="attends-tab" data-toggle="tab" href="#attends" role="tab" aria-controls="attends" aria-selected="false">茶會出席</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade" id="M" role="tabpanel" aria-labelledby="M-tab">
+            {% for member in M_members %}
+                <div class="card my-2 border-success">
+                    <h5 class="card-header">
+                        <div class="row justify-content-between">
+                            <div class="col-auto">
+                                {{ member.nid }} - 社員資料
+                            </div>
+                            <div class="col-auto">
+                                <span class="badge badge-pill badge-success">
+                                    {{ member.get_status_display }}
+                                </span>
+                            </div>
+                        </div>
+                    </h5>
+                    <div class="card-body">
+                        <p class="card-text">姓名：{{ member.name }}</p>
+                        <p class="card-text">學號：{{ member.nid }}</p>
+                        <p class="card-text">系級：{{ member.dept }}</p>
+                        <p class="card-text">年級：{{ member.get_level_display }}</p>
+                        <p class="card-text">電話：{{ member.phone }}</p>
+                        <p class="card-text">E-mail：{{ member.email }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <form class="form-inline" action="{% url 'join:review' id=member.id %}" method="POST">
+                            {% csrf_token %}
+                            <a href="{% url 'join:edit' id=member.id %}" class="btn btn-primary" role="button">
+                                <i class="far fa-edit"></i>
+                                修改資料
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="NP" role="tabpanel" aria-labelledby="NP-tab">
+            {% for member in NP_members %}
+                <div class="card my-2 border-danger">
+                    <h5 class="card-header">
+                        <div class="row justify-content-between">
+                            <div class="col-auto">
+                                {{ member.nid }} - 社員資料
+                            </div>
+                            <div class="col-auto">
+                                <span class="badge badge-pill badge-danger">
+                                    {{ member.get_status_display }}
+                                </span>
+                            </div>
+                        </div>
+                    </h5>
+                    <div class="card-body">
+                        <p class="card-text">姓名：{{ member.name }}</p>
+                        <p class="card-text">學號：{{ member.nid }}</p>
+                        <p class="card-text">系級：{{ member.dept }}</p>
+                        <p class="card-text">年級：{{ member.get_level_display }}</p>
+                        <p class="card-text">電話：{{ member.phone }}</p>
+                        <p class="card-text">E-mail：{{ member.email }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <form class="form-inline" action="{% url 'join:review' id=member.id %}" method="POST">
+                            {% csrf_token %}
+                            {% comment %} 未付款 {% endcomment %}
+                            {% ifequal member.status "NP" %}
+                                <button type="submit" class="btn btn-success mr-1">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                    確認付款
+                                </button>
+                            {% endifequal %}
+                            <a href="{% url 'join:edit' id=member.id %}" class="btn btn-primary" role="button">
+                                <i class="far fa-edit"></i>
+                                修改資料
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade show active" id="UR" role="tabpanel" aria-labelledby="UR-tab">
+            {% for member in UR_members %}
+                <div class="card my-2 border-info">
+                    <h5 class="card-header">
+                        <div class="row justify-content-between">
+                            <div class="col-auto">
+                                {{ member.nid }} - 社員資料
+                            </div>
+                            <div class="col-auto">
+                                <span class="badge badge-pill badge-info">
+                                    {{ member.get_status_display }}
+                                </span>
+                            </div>
+                        </div>
+                    </h5>
+                    <div class="card-body">
+                        <p class="card-text">姓名：{{ member.name }}</p>
+                        <p class="card-text">學號：{{ member.nid }}</p>
+                        <p class="card-text">系級：{{ member.dept }}</p>
+                        <p class="card-text">年級：{{ member.get_level_display }}</p>
+                        <p class="card-text">電話：{{ member.phone }}</p>
+                        <p class="card-text">E-mail：{{ member.email }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <form class="form-inline" action="{% url 'join:review' id=member.id %}" method="POST">
+                            {% csrf_token %}
+                            {% comment %} 審核中 {% endcomment %}
+                            {% ifequal member.status "UR" %}
+                                <button type="submit" class="btn btn-success mr-1">
+                                    <i class="fas fa-user-check"></i>
+                                    審核通過
+                                </button>
+                            {% endifequal %}
+                            <a href="{% url 'join:edit' id=member.id %}" class="btn btn-primary" role="button">
+                                <i class="far fa-edit"></i>
+                                修改資料
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="attends" role="tabpanel" aria-labelledby="attends-tab">
+            <table class="table table-bordered table-striped table-hover my-2">
+                <thead>
+                    <tr>
+                        <th scope="col">編號</th>
+                        <th scope="col">學號</th>
+                        <th scope="col">姓名</th>
+                        <th scope="col">修改</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for attend in attends %}
+                        <tr>
+                            <th scope="row">{{ attend.id }}</th>
+                            <td>{{ attend.nid }}</td>
+                            <td>{{ attend.name }}</td>
+                            <td>
+                                <a href="{% url 'enter:edit' id=attend.id %}" class="btn btn-primary" role="button">
+                                    <i class="far fa-edit"></i>
+                                    修改資料
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

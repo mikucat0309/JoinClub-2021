@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}黑客社 - 修改茶會調查表單{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>修改茶會調查表單</h3>
+    <hr>
+    <form action="{% url 'enter:edit' id=attend.id %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.name.label_tag }}
+            <input type="text" name="name" class="form-control" value="{{ attend.name }}" placeholder="請輸入姓名" maxlength="50" required id="id_name">
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.nid.label_tag }}
+            <input type="text" name="nid" class="form-control" value="{{ attend.nid }}" placeholder="請輸入學號" maxlength="15" required id="id_nid">
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.nid.errors %}
+                {% for error in form.nid.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="custom-control custom-checkbox my-3">
+            <input type="checkbox" class="custom-control-input" id="privacy" name="privacy" required>
+            <label class="custom-control-label" for="privacy" style="color:red">本人同意將個人資料提供逢甲大學黑客社使用，本社依個人資料保護法、相關法規及學校相關法規進行處理以及利用。</label>
+        </div>
+        <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    {% if form.name.errors %}
+        document.getElementById("id_name").classList.add("is-invalid");
+    {% endif %}
+    {% if form.nid.errors %}
+        document.getElementById("id_nid").classList.add("is-invalid");
+    {% endif %}
+</script>
+{% endblock %}
