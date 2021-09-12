@@ -29,37 +29,68 @@
     <form action="{% url 'join:search' %}" method="POST">
         {% csrf_token %}
         <div class="form-row align-items-center">
-            <div class="col-auto mr-4">
-                <label class="sr-only" for="nid">NID</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">學號</div>
-                    </div>
-                    <input type="text" class="form-control" id="nid" placeholder="請輸入欲查詢學號" name="nid">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-outline-secondary">
-                            <i class="fas fa-search"></i>
-                            查詢
-                        </button>
-                    </div>
+            <label class="sr-only" for="nid">NID</label>
+            <div class="input-group col-6">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">入社表單</div>
                 </div>
-            </div>
-            <div class="col-auto my-4">
-                <label class="sr-only" for="name">Name</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">姓名</div>
-                    </div>
-                    <input type="text" class="form-control" id="name" placeholder="請輸入欲查詢姓名" name="name">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-outline-secondary">
-                            <i class="fas fa-search"></i>
-                            查詢
-                        </button>
-                    </div>
+                <input type="text" class="form-control" id="searchTerm" placeholder="輸入學號、姓名、電話" name="searchTerm">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-outline-secondary">
+                        <i class="fas fa-search"></i>
+                        查詢
+                    </button>
                 </div>
             </div>
         </div>
-    </form> 
+    </form>
+
+    <div class="container">
+    <table class="table table-striped table-hover ">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">姓名</th>
+        <th scope="col">學號</th>
+        <th scope="col">系級</th>
+        <th scope="col">電話</th>
+        <th scope="col">email</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for member in members %}
+        <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td><a href="{% url 'join:review' member.id %}">{{ member.name }}</a></td>
+        <td>{{ member.nid }}</td>
+        <td>{{ member.dept }}</td>
+        <td>{{ member.phone }}</td>
+        <td>{{ member.email }}</td>
+        {% comment %} <td>{{ member.get_status_display }}</td> {% endcomment %}
+        <td>{% ifequal member.status "UR" %}
+                        <span class="badge badge-pill badge-info">
+                            {{ member.get_status_display }}
+                        </span>
+                    {% endifequal %}
+                    {% comment %} 已入社 {% endcomment %}
+                    {% ifequal member.status "M" %}
+                        <span class="badge badge-pill badge-success">
+                            {{ member.get_status_display }}
+                        </span>
+                    {% endifequal %}
+                    {% comment %} 未付款 {% endcomment %}
+                    {% ifequal member.status "NP" %}
+                        <span class="badge badge-pill badge-danger">
+                            {{ member.get_status_display }}
+                        </span>
+                    {% endifequal %}
+        </td>
+        </tr>   
+        {%endfor%}
+    </tbody>
+    </table>
+</div>
+     
 </div>
 {% endblock %}

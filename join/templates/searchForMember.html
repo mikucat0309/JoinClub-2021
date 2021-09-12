@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+{% endblock %}
+
+{% block title %}黑客社 - 查詢(入社表單){% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row d-flex justify-content-between">
+        <div class="col-auto">
+            <h3>繳款情形 - 查詢</h3>
+        </div>
+        
+    </div>
+    
+    <hr>
+    <form action="{% url 'join:searchForMember' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-row align-items-center">
+            <div class="col-auto mr-4">
+                <label class="sr-only" for="nid">NID</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">學號</div>
+                    </div>
+                    <input type="text" class="form-control" id="nid" placeholder="請輸入欲查詢學號" name="nid">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-search"></i>
+                            查詢
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <div class="card">
+        <h5 class="card-header">
+            <div class="row justify-content-between">
+                <div class="col-auto">
+                    {% if member.nid %}
+                        {{ member.nid }} - 繳款情形
+                    {% else %}
+                        {{ result }}
+                    {% endif %}
+                </div>
+                <div class="col-auto">
+                    {% comment %} 審核中 {% endcomment %}
+                    {% ifequal member.status "UR" %}
+                        <span class="badge badge-pill badge-info">
+                            {{ member.get_status_display }}
+                        </span>
+                    {% endifequal %}
+                    {% comment %} 已入社 {% endcomment %}
+                    {% ifequal member.status "M" %}
+                        <span class="badge badge-pill badge-success">
+                            {{ member.get_status_display }}
+                        </span>
+                    {% endifequal %}
+                    {% comment %} 未付款 {% endcomment %}
+                    {% ifequal member.status "NP" %}
+                        <span class="badge badge-pill badge-danger">
+                            {{ member.get_status_display }}
+                        </span>
+                    {% endifequal %}
+                </div>
+            </div>
+        </h5>
+        
+        
+    </div>
+</div>
+{% endblock %}

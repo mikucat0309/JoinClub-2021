@@ -90,9 +90,71 @@
                 {% endfor %}
             {% endif %}
         </div>
+        <div class="form-group">
+            {{ form.pay.label_tag }}
+            <select name="pay" class="form-control" placeholder="" id="id_pay">
+                <option value="C" {% ifequal member.pay "C" %}{{"selected"}}{% endifequal %}>現金</option>
+                <option value="R" {% ifequal member.pay "R" %}{{"selected"}}{% endifequal %}>匯款</option>
+            </select>
+            <small id="payHelp" class="form-text text-muted">{{ form.pay.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.pay.errors %}
+                {% for error in form.pay.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.bankAccount.label_tag }}
+            <input type="text" name="bankAccount" class="form-control" value="{{ member.bankAccount }}" aria-describedby="bankAccountHelp" placeholder="請輸入電話號碼" maxlength="15" id="id_bankAccount">
+            <small id="bankAccountHelp" class="form-text text-muted">{{ form.bankAccount.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.bankAccount.errors %}
+                {% for error in form.bankAccount.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.is_FCU.label_tag }}
+            <select name="is_FCU" class="form-control" placeholder="" id="id_is_FCU">
+                <option value="Y" {% ifequal member.is_FCU "Y" %}{{"selected"}}{% endifequal %}>逢甲大學</option>
+                <option value="N" {% ifequal member.is_FCU "N" %}{{"selected"}}{% endifequal %}>其他學校</option>
+            </select>
+            <small id="is_FCUHelp" class="form-text text-muted">{{ form.is_FCU.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.is_FCU.errors %}
+                {% for error in form.is_FCU.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.school.label_tag }}
+            <input type="text" name="school" class="form-control" value="{{ member.school }}" aria-describedby="schoolHelp" placeholder="請輸入學校名稱" maxlength="50" id="id_school">
+            <small id="schoolHelp" class="form-text text-muted">{{ form.school.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.school.errors %}
+                {% for error in form.school.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
         <div class="custom-control custom-checkbox my-3">
             <input type="checkbox" class="custom-control-input" id="privacy" name="privacy" required>
             <label class="custom-control-label" for="privacy" style="color:red">本人同意將個人資料提供逢甲大學黑客社使用，本社依個人資料保護法、相關法規及學校相關法規進行處理以及利用。</label>
+        </div>
+        <div class="custom-control custom-checkbox my-3">
+            <input type="checkbox" class="custom-control-input" id="privacy2" name="privacy2" required>
+            <label class="custom-control-label" for="privacy2" style="color:red">本人入社後即同意保密協議之內容。</label>
         </div>
         <button type="submit" class="btn btn-primary">提交</button>
     </form>

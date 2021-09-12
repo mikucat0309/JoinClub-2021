@@ -41,6 +41,10 @@
             <p class="card-text">年級：{{ member.get_level_display }}</p>
             <p class="card-text">電話：{{ member.phone }}</p>
             <p class="card-text">E-mail：{{ member.email }}</p>
+            <p class="card-text">付款方式：{{ member.get_pay_display }}</p>
+            <p class="card-text">銀行末五碼：{{ member.bankAccount }}</p>
+            <p class="card-text">學校：{{ member.get_is_FCU_display }}</p>
+            <p class="card-text">其他學校名稱：{{ member.school }}</p>
         </div>
         <div class="card-footer">
             <form class="form-inline" action="{% url 'join:review' id=member.id %}" method="POST">

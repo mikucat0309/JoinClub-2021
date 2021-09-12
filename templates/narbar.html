@@ -13,6 +13,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
                         <a class="dropdown-item" href="{% url 'enter:attend' %}">茶會調查</a>
                         <a class="dropdown-item" href="{% url 'join:join' %}">入社表單</a>
+                        <a class="dropdown-item" href="{% url 'join:secret' %}">保密協議</a>
                         <a class="dropdown-item" href="{% url 'enter:checkin' %}">茶會簽到</a>
                     </div>
                 </li>
@@ -23,14 +24,27 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
                         <a class="dropdown-item" href="{% url 'enter:search' %}">茶會調查</a>
                         <a class="dropdown-item" href="{% url 'join:search' %}">入社表單</a>
+                        <a class="dropdown-item" href="{% url 'join:secretSearch' %}">保密協議</a>
                     </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'join:view' %}">總覽</a>
                 </li>
             {% else %}
+                
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'join:join' %}">入社表單</a>
+                    <a class="nav-link" href="{% url 'join:join' %}">入社表單</a> 
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'join:secret' %}">保密協議</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        查詢
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <a class="dropdown-item" href="{% url 'join:searchForMember' %}">繳款情形</a>
+                    </div>
                 </li>
             {% endif %}
             <li class="nav-item dropdown">

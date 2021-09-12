@@ -87,9 +87,65 @@
                 {% endfor %}
             {% endif %}
         </div>
+        <div class="form-group">
+            {{ form.pay.label_tag }}
+            {{ form.pay }}
+            <small id="payHelp" class="form-text text-muted">{{ form.pay.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.pay.errors %}
+                {% for error in form.pay.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.bankAccount.label_tag }}
+            {{ form.bankAccount }}
+            <small id="bankAccountHelp" class="form-text text-muted">{{ form.bankAccount.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.bankAccount.errors %}
+                {% for error in form.bankAccount.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.is_FCU.label_tag }}
+            {{ form.is_FCU }}
+            <small id="is_FCUHelp" class="form-text text-muted">{{ form.is_FCU.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.is_FCU.errors %}
+                {% for error in form.is_FCU.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.school.label_tag }}
+            {{ form.school }}
+            <small id="schoolHelp" class="form-text text-muted">{{ form.school.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.school.errors %}
+                {% for error in form.school.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
         <div class="custom-control custom-checkbox my-3">
-            <input type="checkbox" class="custom-control-input" id="privacy" name="privacy" required>
-            <label class="custom-control-label" for="privacy" style="color:red">本人同意將個人資料提供逢甲大學黑客社使用，本社依個人資料保護法、相關法規及學校相關法規進行處理以及利用。</label>
+            <input type="checkbox" class="custom-control-input" id="privacy1" name="privacy1" required>
+            <label class="custom-control-label" for="privacy1" style="color:red">本人同意將個人資料提供逢甲大學黑客社使用，本社依個人資料保護法、相關法規及學校相關法規進行處理以及利用。</label>
+        </div>
+        <div class="custom-control custom-checkbox my-3">
+            <input type="checkbox" class="custom-control-input" id="privacy2" name="privacy2" required>
+            <label class="custom-control-label" for="privacy2" style="color:red">本人入社後即同意保密協議之內容。</label>
         </div>
         <button type="submit" class="btn btn-primary">
             <i class="far fa-check-circle"></i>
