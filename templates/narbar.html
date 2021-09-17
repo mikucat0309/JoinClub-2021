@@ -30,6 +30,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'join:view' %}">總覽</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        統計圖表
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                        <a class="dropdown-item" href="{% url 'chart:joinclub' %}">入社情形</a>
+                        <a class="dropdown-item" href="{% url 'chart:receiveprize' %}">領獎情形</a>
+                        <a class="dropdown-item" href="{% url 'chart:attendance' %}">出席情形</a>
+                    </div>
+                </li>
             {% else %}
                 
                 <li class="nav-item">
@@ -46,24 +56,21 @@
                         <a class="dropdown-item" href="{% url 'join:searchForMember' %}">繳款情形</a>
                     </div>
                 </li>
+                
             {% endif %}
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    統計圖表
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                    <a class="dropdown-item" href="{% url 'chart:joinclub' %}">入社情形</a>
-                    <a class="dropdown-item" href="{% url 'chart:receiveprize' %}">領獎情形</a>
-                    <a class="dropdown-item" href="{% url 'chart:attendance' %}">出席情形</a>
-                </div>
+            <li class="nav-item">
+                <a class="nav-link" href="https://act.hackersir.org/">活動列表</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'course' %}">課程總覽</a>
             </li>
         </ul>
         {% if user.is_authenticated %}
             <span class="text-white my-2 mr-2 my-sm-0">Hi {{ user.username }}!</span>
-            <a class="btn btn-outline-primary my-2 mr-2 my-sm-0" href="{% url 'admin:index' %}">Admin</a>
+            {% comment %} <a class="btn btn-outline-primary my-2 mr-2 my-sm-0" href="{% url 'admin:index' %}">Admin</a> {% endcomment %}
             <a class="btn btn-outline-light my-2 mr-2 my-sm-0" href="{% url 'logout' %}">登出</a>
-        {% else %}
-            <a class="btn btn-outline-light my-2 mr-2 my-sm-0" href="{% url 'login' %}">登入</a>
+        {% comment %} {% else %}
+            <a class="btn btn-outline-light my-2 mr-2 my-sm-0" href="{% url 'login' %}">登入</a> {% endcomment %}
         {% endif %}
         {% comment %} <a class="btn btn-outline-light my-2 mr-2 my-sm-0" href="{% url 'register' %}">註冊</a> {% endcomment %}
     </div>

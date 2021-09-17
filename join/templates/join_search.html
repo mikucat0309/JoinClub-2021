@@ -54,8 +54,11 @@
         <th scope="col">學號</th>
         <th scope="col">系級</th>
         <th scope="col">電話</th>
-        <th scope="col">email</th>
-
+        <th scope="col">付款方式</th>
+        <th scope="col">銀行末五碼</th>
+        <th scope="col">Discord ID</th>
+        <th scope="col">入社情況</th>
+        <th scope="col">#</th>
         </tr>
     </thead>
     <tbody>
@@ -66,26 +69,41 @@
         <td>{{ member.nid }}</td>
         <td>{{ member.dept }}</td>
         <td>{{ member.phone }}</td>
-        <td>{{ member.email }}</td>
-        {% comment %} <td>{{ member.get_status_display }}</td> {% endcomment %}
-        <td>{% ifequal member.status "UR" %}
-                        <span class="badge badge-pill badge-info">
-                            {{ member.get_status_display }}
-                        </span>
-                    {% endifequal %}
-                    {% comment %} 已入社 {% endcomment %}
-                    {% ifequal member.status "M" %}
-                        <span class="badge badge-pill badge-success">
-                            {{ member.get_status_display }}
-                        </span>
-                    {% endifequal %}
-                    {% comment %} 未付款 {% endcomment %}
-                    {% ifequal member.status "NP" %}
-                        <span class="badge badge-pill badge-danger">
-                            {{ member.get_status_display }}
-                        </span>
-                    {% endifequal %}
+        <td>{{ member.get_pay_display }}</td>
+        <td>{{ member.bankAccount }}</td>
+        <td>{{ member.DiscordId }}</td>
+        {% comment %} 已入社 {% endcomment %}
+        {% ifequal member.status "M" %}
+        <td>
+            <span class="badge badge-pill badge-success">
+                {{ member.get_status_display }}
+            </span>
         </td>
+        <td>
+            <a href="{% url 'join:send_email' id=member.id %}" class="btn btn-success mr-1" role="button">
+                <i class="fas fa-hand-holding-usd"></i>
+                重新寄送收據
+            </a>
+        </td>
+        {% endifequal %}
+        {% comment %} 未付款 {% endcomment %}
+        {% ifequal member.status "NP" %}
+        <td>
+            <span class="badge badge-pill badge-danger">
+                {{ member.get_status_display }}
+            </span>
+        </td>
+        <td>
+            <form class="form-inline" action="{% url 'join:review' id=member.id %}" method="POST">
+                {% csrf_token %}
+                {% comment %} 未付款 {% endcomment %}
+                <button type="submit" class="btn btn-success mr-1">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    確認付款
+                </button>
+            </form>
+        </td>
+        {% endifequal %}
         </tr>   
         {%endfor%}
     </tbody>

@@ -13,9 +13,8 @@ class Member(models.Model):
     ]
 
     STATUS_CHOICES = [
-        ('UR', '審核中'),
-        ('M', '已入社'),
         ('NP', '未付款'),
+        ('M', '已入社'),
     ]
 
     PAY_CHOICES = [
@@ -27,20 +26,37 @@ class Member(models.Model):
         ('Y', '逢甲大學'),
         ('N', '其他學校'),
     ]
+
+    CLOTHES_CHOICES = [
+        ('N', '不購買'),
+        ('S', '尺寸S'),
+        ('M', '尺寸M'),
+        ('L', '尺寸L'),
+        ('XL', '尺寸XL'),
+    ]
+
+    CLOTHES_STATUS_CHOICES = [
+        ('N', '不購買'),
+        ('NG', '未領取'),
+        ('G', '已領取'),
+    ]
+
     name = models.CharField(max_length=50)
     nid = models.CharField(max_length=15, unique=True)
     dept = models.CharField(max_length=20)
-    level = models.CharField(max_length=2, choices=LEVEL_CHOICES)
+    level = models.CharField(max_length=2, choices=LEVEL_CHOICES, default='B1')
     # 不能用 unique=True，因為空字串也會被判斷成一樣
-    phone = models.CharField(max_length=15, null=True, blank=True, unique=True)
+    phone = models.CharField(max_length=15, null=True, unique=True)
     email = models.EmailField(unique=True)
     status = models.CharField(
-        max_length=2, choices=STATUS_CHOICES, default="UR")
+        max_length=2, choices=STATUS_CHOICES, default="NP")
     pay = models.CharField(max_length=2, choices=PAY_CHOICES, default="C")
     bankAccount = models.CharField(max_length=5, null=True, blank=True)
     is_FCU = models.CharField(max_length=5, choices=SCHOOL_CHOICES,default="Y")
     school = models.CharField(max_length=50, blank=True)
-
+    DiscordId = models.CharField(max_length=50, blank=True)
+    clothes = models.CharField(max_length=4, choices=CLOTHES_CHOICES, default='N')
+    clothes_status = models.CharField(max_length=3, choices=CLOTHES_STATUS_CHOICES, default='N')
     def __str__(self):
         return "%s %s [%s]" % (self.nid, self.name, self.get_status_display())
 

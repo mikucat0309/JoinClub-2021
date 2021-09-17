@@ -15,10 +15,11 @@ LEVEL_CHOICES = (
 
 
 class JoinForm(ModelForm):
+    #agree1 = forms.CharField(widget=forms.widgets.CheckboxInput(), max_length=3, required=True, label='123', error_messages={'required':'test3'})
     class Meta:
         model = Member
         fields = ['name', 'nid', 'dept', 'level',
-                  'phone', 'email', 'pay', 'bankAccount', 'is_FCU', 'school']
+                  'phone', 'email', 'pay', 'bankAccount', 'is_FCU', 'school', 'DiscordId', 'clothes']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '請輸入姓名'}),
             'nid': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '請輸入學號'}),
@@ -29,7 +30,9 @@ class JoinForm(ModelForm):
             'pay': forms.Select(attrs={'class': 'form-control'}),
             'bankAccount': forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'bankAccountHelp', 'placeholder': '請輸入銀行末五碼'}),
             'is_FCU': forms.Select(attrs={'class': 'form-control'}),
-            'school': forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'schoolHelp', 'placeholder': '請輸入學校名稱'}),
+            'school': forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'schoolHelp', 'placeholder': '如果您不是逢甲大學學生，請輸入您的學校名稱'}),
+            'DiscordId': forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'DiscodeIdHelp', 'placeholder': '請輸入您的Discord ID'}),
+            'clothes': forms.Select(attrs={'class': 'form-control'}),
         }
         labels = {
             'name': _('姓名'),
@@ -41,14 +44,17 @@ class JoinForm(ModelForm):
             'pay': _('付款方式'),
             'bankAccount': _('銀行末五碼'),
             'is_FCU': _('學校'),
-            'school': _('其他學校名稱')
+            'school': _('外校名稱'),
+            'DiscordId': _('Discord ID'),
+            'clothes': _('社服尺寸'),
         }
         help_texts = {
-            'dept': _('例如:資訊一甲'),
+            'dept': _('例如：資訊一甲'),
             'phone': _('請輸入可以聯絡到您的手機'),
             'email': _('請輸入您常用的 E-mail'),
             'bankAccount': _('付款方式選擇匯款才需要填'),
             'school': _('學校選擇其他學校才需要填'),
+            'DiscordId': _('例如：coco#1234'),
         }
         error_messages = {
             'name': {
@@ -69,6 +75,7 @@ class JoinForm(ModelForm):
                 'invalid_choice': _('請勿亂來'),
             },
             'phone': {
+                'required': _('必須填寫電話'),
                 'max_length': _('你的電話太長囉'),
                 'unique': _('您的手機號碼已經被使用過囉'),
             },
@@ -82,14 +89,21 @@ class JoinForm(ModelForm):
                 'invalid_choice': _('請勿亂來'),
             },
             'bankAccount': {
-                'max_length': _('你的系級太長囉'),
+                'max_length': _('您的系級太長囉'),
             },
             'is_FCU': {
                 'required': _('必須選擇學校'),
                 'invalid_choice': _('請勿亂來'),
             },
             'school': {
-                'max_length': _('你的學校名稱太長囉'),
+                'max_length': _('您的學校名稱太長囉'),
+            },
+            'DiscordId': {
+                'max_length': _('您的 Discord ID 太長囉'),
+            },
+            'clothes': {
+                'required': _('必須選擇社服尺寸'),
+                'invalid_choice': _('請勿亂來'),
             },
         }
 

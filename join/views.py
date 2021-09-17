@@ -1,5 +1,5 @@
 from typing import Counter
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -17,7 +17,13 @@ def join(request):
     if request.method == 'POST':
         form = JoinForm(request.POST)
         if form.is_valid():
+            # print(form.data['nid'])
+            
+            # if form.cleaned_data['clothes'] == 'N':
+            #     #form.data['nid'] = 'D0886'
+            #     print('---123---123---')
             form.save()
+            
             messages.add_message(request, messages.SUCCESS,
                                  '提交成功', extra_tags='joinform')
             return HttpResponseRedirect(reverse('index'))
@@ -56,15 +62,8 @@ def searchForMember(request):
                 return render(request, 'searchForMember.html', {'result': '無搜尋結果'})
     return render(request, 'searchForMember.html', {})
 
-# TODO edit review表單跟顯示都還要改 還有autoPEP8
-# TODO 條碼機搜尋保密協議 OK
-# TODO 寄送收據
-# TODO 入社表單多一個勾選框 寫說入社需同意保密協議 OK
-# TODO 入社表單 在注意事項按鈕旁邊再加個按鈕顯示（？ 顯示保密協議
-# TODO 學生證刷條碼機的部分 綠色 紅色 OK
 # TODO 修改requirment doc2pdf
 # TODO 修改注意事項
-
 
 @login_required
 def search(request):
@@ -113,6 +112,10 @@ def secretSearch(request):
         secrets = secret.objects.filter(Q(name__icontains=searchTerm) |
                                         Q(nid__icontains=searchTerm) |
                                         Q(phone__icontains=searchTerm))
+        # members = []
+        # for s in secrets:
+        #     member = Member.objects.get(nid=s.nid)
+        #     members.append(member)
         try:
             # 條碼機刷學生證會多一位數
             Temp = searchTerm
@@ -127,14 +130,14 @@ def secretSearch(request):
 
     return render(request, 'secret_search.html', {})
 
-
-def send_email(id):
+@login_required
+def send_email(request, id):
     '''
     繳費完成後，寄送收據給社員
     '''
     member = get_object_or_404(Member, id=id)
     if member.is_FCU == 'N':  # 校外學生
-        return 0
+        return redirect('join:review', id)
     path = 'Receipt'
     file = os.path.join(path, member.nid + '.pdf')
     print(file)
@@ -154,20 +157,21 @@ def send_email(id):
         receiptTmp.count += 1
         receiptTmp.save()
     mail(member.name, member.nid)
+    return redirect('join:review', id)
 
 
 @login_required
 def review(request, id):
     member = get_object_or_404(Member, id=id)
     if request.method == 'POST':
-        if member.status == 'UR':
-            member.status = 'NP'
-            member.save()
-        elif member.status == 'NP':
+        # if member.status == 'UR':
+        #     member.status = 'NP'
+        #     member.save()
+        if member.status == 'NP':
             member.status = 'M'
             # 狀態改為已入社 順便寄送電子收據
-            send_email(id)
             member.save()
+            return redirect('join:send_email', id)
     return render(request, 'review.html', {'member': member})
 
 
@@ -190,6 +194,6 @@ def edit(request, id):
 def view(request):
     M_members = Member.objects.filter(status='M')
     NP_members = Member.objects.filter(status='NP')
-    UR_members = Member.objects.filter(status='UR')
+    #UR_members = Member.objects.filter(status='UR')
     attends = Attend.objects.all()
-    return render(request, 'view.html', {'M_members': M_members, 'NP_members': NP_members, 'UR_members': UR_members, 'attends': attends})
+    return render(request, 'view.html', {'M_members': M_members, 'NP_members': NP_members, 'attends': attends})

@@ -5,12 +5,15 @@ from django.utils.http import urlquote
 import csv, codecs
 from join.models import Member, secret
 
+@login_required
 def joinclub(request):
     return render(request, 'joinclub.html', {})
 
+@login_required
 def receiveprize(request):
     return render(request, 'receiveprize.html', {})
 
+@login_required
 def attendance(request):
     return render(request, 'attendance.html', {})
 

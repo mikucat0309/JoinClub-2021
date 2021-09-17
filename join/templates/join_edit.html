@@ -137,7 +137,7 @@
         </div>
         <div class="form-group">
             {{ form.school.label_tag }}
-            <input type="text" name="school" class="form-control" value="{{ member.school }}" aria-describedby="schoolHelp" placeholder="請輸入學校名稱" maxlength="50" id="id_school">
+            <input type="text" name="school" class="form-control" value="{{ member.school }}" aria-describedby="schoolHelp" placeholder="如果您不是逢甲大學學生，請輸入您的學校名稱" maxlength="50" id="id_school">
             <small id="schoolHelp" class="form-text text-muted">{{ form.school.help_text }}</small>
             {% comment %} 錯誤訊息 {% endcomment %}
             {% if form.school.errors %}
@@ -148,6 +148,40 @@
                 {% endfor %}
             {% endif %}
         </div>
+        <div class="form-group">
+            {{ form.DiscordId.label_tag }}
+            <input type="text" name="DiscordId" class="form-control" value="{{ member.DiscordId }}" aria-describedby="DiscordIdHelp" placeholder="請輸入您的Discord ID" maxlength="50" id="id_DiscordId">
+            <small id="DiscordIdHelp" class="form-text text-muted">{{ form.DiscordId.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.DiscordId.errors %}
+                {% for error in form.DiscordId.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.clothes.label_tag }}
+            <select name="clothes" class="form-control" placeholder="" id="id_clothes">
+                <option value="N" {% ifequal member.clothes "N" %}{{"selected"}}{% endifequal %}>不購買</option>
+                <option value="S" {% ifequal member.clothes "S" %}{{"selected"}}{% endifequal %}>尺寸S</option>
+                <option value="M" {% ifequal member.clothes "M" %}{{"selected"}}{% endifequal %}>尺寸M</option>
+                <option value="L" {% ifequal member.clothes "L" %}{{"selected"}}{% endifequal %}>尺寸L</option>
+                <option value="XL" {% ifequal member.clothes "XL" %}{{"selected"}}{% endifequal %}>尺寸XL</option>
+                
+            </select>
+            <small id="clothesHelp" class="form-text text-muted">{{ form.clothes.help_text }}</small>
+            {% comment %} 錯誤訊息 {% endcomment %}
+            {% if form.clothes.errors %}
+                {% for error in form.clothes.errors %}
+                    <div class="invalid-feedback">
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
         <div class="custom-control custom-checkbox my-3">
             <input type="checkbox" class="custom-control-input" id="privacy" name="privacy" required>
             <label class="custom-control-label" for="privacy" style="color:red">本人同意將個人資料提供逢甲大學黑客社使用，本社依個人資料保護法、相關法規及學校相關法規進行處理以及利用。</label>
@@ -159,6 +193,7 @@
         <button type="submit" class="btn btn-primary">提交</button>
     </form>
 </div>
+<br>
 {% endblock %}
 
 {% block js %}
@@ -180,6 +215,21 @@
     {% endif %}
     {% if form.email.errors %}
         document.getElementById("id_email").classList.add("is-invalid");
+    {% endif %}
+    {% if form.pay.errors %}
+        document.getElementById("id_pay").classList.add("is-invalid");
+    {% endif %}
+    {% if form.bankAccount.errors %}
+        document.getElementById("id_bankAccount").classList.add("is-invalid");
+    {% endif %}
+    {% if form.is_FCU.errors %}
+        document.getElementById("id_is_FCU").classList.add("is-invalid");
+    {% endif %}
+    {% if form.school.errors %}
+        document.getElementById("id_school").classList.add("is-invalid");
+    {% endif %}
+    {% if form.DiscordId.errors %}
+        document.getElementById("id_DiscordId").classList.add("is-invalid");
     {% endif %}
 </script>
 {% endblock %}

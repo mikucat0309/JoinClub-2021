@@ -10,6 +10,7 @@ urlpatterns = [
     path('search', views.search, name="search"),
     path('secretSearch', views.secretSearch, name="secretSearch"),
     path('searchForMember', views.searchForMember, name="searchForMember"),
+    path('send_email/<int:id>', views.send_email, name="send_email"),
     path('review/<int:id>', views.review, name="review"),
     path('edit/<int:id>', views.edit, name="edit"),
     path('view', views.view, name="view"),

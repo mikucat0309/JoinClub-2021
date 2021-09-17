@@ -21,7 +21,8 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('comingsoon/', views.comingsoon, name="comingsoon"),
     path('course/', views.course, name="course"),
-    path('admin/', admin.site.urls),
+    #path('admin/', admin.site.urls),
+    path('nimda_ognajd/', admin.site.urls), # django_admin倒過來
     path('join/', include('join.urls')),
     path('chart/', include('chart.urls')),
     path('enter/', include('enter.urls')),

@@ -8,23 +8,29 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
-import pythoncom
+#import pythoncom
 
 def word(name,stID,data,num):
     path = 'Receipt'
-    file = os.path.join(path, '黑客社電子收據.docx')
-    tpl = DocxTemplate(file)
-    
+    file = os.path.join(path, '黑客社電子收據_社員收執.docx')
+    tpl1 = DocxTemplate(file)
+    file = os.path.join(path, '黑客社電子收據_社團存根.docx')
+    tpl2 = DocxTemplate(file)
     context = {
         'name': name,
         'stID': str(stID),
         'date': data,
         'num': num
     }
-    pythoncom.CoInitialize() # 加上這行讀取docx時才不會出錯
-    tpl.render(context)
-    tpl.save(os.path.join(path, context['stID'] + '.docx'))
+    #pythoncom.CoInitialize() # 加上這行讀取docx時才不會出錯
+    tpl1.render(context)
+    tpl1.save(os.path.join(path, context['stID'] + '.docx'))
     convert(os.path.join(path, context['stID'] + '.docx'))
+    tpl2.render(context)
+    tpl2.save(os.path.join(path, context['stID'] + '_社團存根' + '.docx'))
+    convert(os.path.join(path, context['stID'] + '_社團存根' + '.docx'))
+    os.remove(os.path.join(path, context['stID'] + '.docx'))
+    os.remove(os.path.join(path, context['stID'] + '_社團存根' + '.docx'))
 
 
 def mail(name, stID):
@@ -80,3 +86,5 @@ def mail(name, stID):
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, text)
+
+    os.remove(os.path.join(path, filename))

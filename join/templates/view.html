@@ -12,9 +12,6 @@
             <a class="nav-link" id="NP-tab" data-toggle="tab" href="#NP" role="tab" aria-controls="NP" aria-selected="false">未付款</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" id="UR-tab" data-toggle="tab" href="#UR" role="tab" aria-controls="UR" aria-selected="true">審核中</a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" id="attends-tab" data-toggle="tab" href="#attends" role="tab" aria-controls="attends" aria-selected="false">茶會出席</a>
         </li>
     </ul>
@@ -44,11 +41,16 @@
                         <p class="card-text">付款方式：{{ member.get_pay_display }}</p>
                         <p class="card-text">銀行末五碼：{{ member.bankAccount }}</p>
                         <p class="card-text">學校：{{ member.get_is_FCU_display }}</p>
-                        <p class="card-text">其他學校名稱：{{ member.school }}</p>
+                        <p class="card-text">外校名稱：{{ member.school }}</p>
+                        <p class="card-text">Discord ID：{{ member.DiscordId }}</p>
                     </div>
                     <div class="card-footer">
                         <form class="form-inline" action="{% url 'join:review' id=member.id %}" method="POST">
                             {% csrf_token %}
+                            <a href="{% url 'join:send_email' id=member.id %}" class="btn btn-success mr-1" role="button">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                重新寄送收據
+                            </a>
                             <a href="{% url 'join:edit' id=member.id %}" class="btn btn-primary" role="button">
                                 <i class="far fa-edit"></i>
                                 修改資料
@@ -83,7 +85,8 @@
                         <p class="card-text">付款方式：{{ member.get_pay_display }}</p>
                         <p class="card-text">銀行末五碼：{{ member.bankAccount }}</p>
                         <p class="card-text">學校：{{ member.get_is_FCU_display }}</p>
-                        <p class="card-text">其他學校名稱：{{ member.school }}</p>
+                        <p class="card-text">外校名稱：{{ member.school }}</p>
+                        <p class="card-text">Discord ID：{{ member.DiscordId }}</p>
                     </div>
                     <div class="card-footer">
                         <form class="form-inline" action="{% url 'join:review' id=member.id %}" method="POST">
@@ -93,52 +96,6 @@
                                 <button type="submit" class="btn btn-success mr-1">
                                     <i class="fas fa-hand-holding-usd"></i>
                                     確認付款
-                                </button>
-                            {% endifequal %}
-                            <a href="{% url 'join:edit' id=member.id %}" class="btn btn-primary" role="button">
-                                <i class="far fa-edit"></i>
-                                修改資料
-                            </a>
-                        </form>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="tab-pane fade show active" id="UR" role="tabpanel" aria-labelledby="UR-tab">
-            {% for member in UR_members %}
-                <div class="card my-2 border-info">
-                    <h5 class="card-header">
-                        <div class="row justify-content-between">
-                            <div class="col-auto">
-                                {{ member.nid }} - 社員資料
-                            </div>
-                            <div class="col-auto">
-                                <span class="badge badge-pill badge-info">
-                                    {{ member.get_status_display }}
-                                </span>
-                            </div>
-                        </div>
-                    </h5>
-                    <div class="card-body">
-                        <p class="card-text">姓名：{{ member.name }}</p>
-                        <p class="card-text">學號：{{ member.nid }}</p>
-                        <p class="card-text">系級：{{ member.dept }}</p>
-                        <p class="card-text">年級：{{ member.get_level_display }}</p>
-                        <p class="card-text">電話：{{ member.phone }}</p>
-                        <p class="card-text">E-mail：{{ member.email }}</p>
-                        <p class="card-text">付款方式：{{ member.get_pay_display }}</p>
-                        <p class="card-text">銀行末五碼：{{ member.bankAccount }}</p>
-                        <p class="card-text">學校：{{ member.get_is_FCU_display }}</p>
-                        <p class="card-text">其他學校名稱：{{ member.school }}</p>
-                    </div>
-                    <div class="card-footer">
-                        <form class="form-inline" action="{% url 'join:review' id=member.id %}" method="POST">
-                            {% csrf_token %}
-                            {% comment %} 審核中 {% endcomment %}
-                            {% ifequal member.status "UR" %}
-                                <button type="submit" class="btn btn-success mr-1">
-                                    <i class="fas fa-user-check"></i>
-                                    審核通過
                                 </button>
                             {% endifequal %}
                             <a href="{% url 'join:edit' id=member.id %}" class="btn btn-primary" role="button">
