@@ -31,7 +31,7 @@ class JoinForm(ModelForm):
             'bankAccount': forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'bankAccountHelp', 'placeholder': '請輸入銀行末五碼'}),
             'is_FCU': forms.Select(attrs={'class': 'form-control'}),
             'school': forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'schoolHelp', 'placeholder': '如果您不是逢甲大學學生，請輸入您的學校名稱'}),
-            'DiscordId': forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'DiscodeIdHelp', 'placeholder': '請輸入您的Discord ID'}),
+            'DiscordId': forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'DiscodeIdHelp', 'placeholder': '請輸入您的 Discord ID'}),
             'clothes': forms.Select(attrs={'class': 'form-control'}),
         }
         labels = {
@@ -54,7 +54,7 @@ class JoinForm(ModelForm):
             'email': _('請輸入您常用的 E-mail'),
             'bankAccount': _('付款方式選擇匯款才需要填'),
             'school': _('學校選擇其他學校才需要填'),
-            'DiscordId': _('例如：coco#1234'),
+            'DiscordId': _('例如：meow#1234'),
         }
         error_messages = {
             'name': {

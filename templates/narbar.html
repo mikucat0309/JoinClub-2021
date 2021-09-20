@@ -11,10 +11,12 @@
                         表單
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                        <a class="dropdown-item" href="{% url 'enter:attend' %}">茶會調查</a>
+                        <!--
+                            <a class="dropdown-item" href="{% url 'enter:attend' %}">茶會調查</a>
+                            <a class="dropdown-item" href="{% url 'enter:checkin' %}">茶會簽到</a>
+                        -->
                         <a class="dropdown-item" href="{% url 'join:join' %}">入社表單</a>
                         <a class="dropdown-item" href="{% url 'join:secret' %}">保密協議</a>
-                        <a class="dropdown-item" href="{% url 'enter:checkin' %}">茶會簽到</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -22,7 +24,10 @@
                         查詢
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                        <a class="dropdown-item" href="{% url 'enter:search' %}">茶會調查</a>
+                        <!--
+                            <a class="dropdown-item" href="{% url 'enter:search' %}">茶會調查</a>
+                        -->
+                        
                         <a class="dropdown-item" href="{% url 'join:search' %}">入社表單</a>
                         <a class="dropdown-item" href="{% url 'join:secretSearch' %}">保密協議</a>
                     </div>
@@ -36,8 +41,10 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
                         <a class="dropdown-item" href="{% url 'chart:joinclub' %}">入社情形</a>
-                        <a class="dropdown-item" href="{% url 'chart:receiveprize' %}">領獎情形</a>
-                        <a class="dropdown-item" href="{% url 'chart:attendance' %}">出席情形</a>
+                        <!--
+                            <a class="dropdown-item" href="{% url 'chart:receiveprize' %}">領獎情形</a>
+                            <a class="dropdown-item" href="{% url 'chart:attendance' %}">出席情形</a>
+                        -->
                     </div>
                 </li>
             {% else %}
@@ -59,10 +66,10 @@
                 
             {% endif %}
             <li class="nav-item">
-                <a class="nav-link" href="https://act.hackersir.org/">活動列表</a>
+                <a class="nav-link" href="{% url 'course' %}">課程總覽</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'course' %}">課程總覽</a>
+                <a class="nav-link" href="https://act.hackersir.org/" target="_blank" >活動列表</a>
             </li>
         </ul>
         {% if user.is_authenticated %}
