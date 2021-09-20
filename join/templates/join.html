@@ -165,7 +165,7 @@
                 {% endfor %}
             {% endif %}
         </div>
-        
+
         <div class="custom-control custom-checkbox my-3">
             <input type="checkbox" class="custom-control-input" id="privacy1" name="privacy1" required>
             <label class="custom-control-label" for="privacy1" style="color:red">本人同意將個人資料提供逢甲大學黑客社使用，本社依個人資料保護法、相關法規及學校相關法規進行處理以及利用。</label>
@@ -182,9 +182,13 @@
             <i class="fab fa-readme"></i>
             點我再次閱讀注意事項
         </button>
-        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#joinModal">
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#secretModal">
             <i class="fab fa-readme"></i>
             點我再次閱讀保密協議
+        </button>
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#clothesModal">
+            <i class="fas fa-tshirt"></i>
+            點我再次閱讀社服尺寸
         </button>
     </form>
     
@@ -192,6 +196,8 @@
     {% include 'notice.html' %}
     <!-- 保密協議內容 -->
     {% include 'secret.html' %}
+    <!-- 社服尺寸內容 -->
+    {% include 'clothes.html' %}
 </div>
 <br>
 

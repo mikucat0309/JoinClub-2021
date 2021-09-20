@@ -79,7 +79,7 @@
         </div>
         <div class="form-group">
             {{ form.email.label_tag }}
-            <input type="email" name="email" class="form-control" value="{{ member.email }}" aria-describedby="emailHelp" placeholder="請輸入點子郵件" required id="id_email">
+            <input type="email" name="email" class="form-control" value="{{ member.email }}" aria-describedby="emailHelp" placeholder="請輸入電子郵件" required id="id_email">
             <small id="emailHelp" class="form-text text-muted">{{ form.email.help_text }}</small>
             {% comment %} 錯誤訊息 {% endcomment %}
             {% if form.email.errors %}
@@ -150,7 +150,7 @@
         </div>
         <div class="form-group">
             {{ form.DiscordId.label_tag }}
-            <input type="text" name="DiscordId" class="form-control" value="{{ member.DiscordId }}" aria-describedby="DiscordIdHelp" placeholder="請輸入您的Discord ID" maxlength="50" id="id_DiscordId">
+            <input type="text" name="DiscordId" class="form-control" value="{{ member.DiscordId }}" aria-describedby="DiscordIdHelp" placeholder="請輸入您的 Discord ID" maxlength="50" id="id_DiscordId">
             <small id="DiscordIdHelp" class="form-text text-muted">{{ form.DiscordId.help_text }}</small>
             {% comment %} 錯誤訊息 {% endcomment %}
             {% if form.DiscordId.errors %}
@@ -165,11 +165,13 @@
             {{ form.clothes.label_tag }}
             <select name="clothes" class="form-control" placeholder="" id="id_clothes">
                 <option value="N" {% ifequal member.clothes "N" %}{{"selected"}}{% endifequal %}>不購買</option>
-                <option value="S" {% ifequal member.clothes "S" %}{{"selected"}}{% endifequal %}>尺寸S</option>
-                <option value="M" {% ifequal member.clothes "M" %}{{"selected"}}{% endifequal %}>尺寸M</option>
-                <option value="L" {% ifequal member.clothes "L" %}{{"selected"}}{% endifequal %}>尺寸L</option>
-                <option value="XL" {% ifequal member.clothes "XL" %}{{"selected"}}{% endifequal %}>尺寸XL</option>
-                
+                <option value="XXS" {% ifequal member.clothes "XXS" %}{{"selected"}}{% endifequal %}>尺寸 XXS</option>
+                <option value="XS" {% ifequal member.clothes "XS" %}{{"selected"}}{% endifequal %}>尺寸 XS</option>
+                <option value="S" {% ifequal member.clothes "S" %}{{"selected"}}{% endifequal %}>尺寸 S</option>
+                <option value="M" {% ifequal member.clothes "M" %}{{"selected"}}{% endifequal %}>尺寸 M</option>
+                <option value="L" {% ifequal member.clothes "L" %}{{"selected"}}{% endifequal %}>尺寸 L</option>
+                <option value="XL" {% ifequal member.clothes "XL" %}{{"selected"}}{% endifequal %}>尺寸 XL</option>
+                <option value="2XL" {% ifequal member.clothes "2XL" %}{{"selected"}}{% endifequal %}>尺寸 2XL</option>
             </select>
             <small id="clothesHelp" class="form-text text-muted">{{ form.clothes.help_text }}</small>
             {% comment %} 錯誤訊息 {% endcomment %}

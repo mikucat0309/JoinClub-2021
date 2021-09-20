@@ -8,118 +8,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        
-        <style>
-            a,
-            a:focus,
-            a:hover {
-                color: #fff;
-            }
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+       
 
-            .btn-secondary,
-            .btn-secondary:hover,
-            .btn-secondary:focus {
-                color: #333;
-                text-shadow: none; /* Prevent inheritance from `body` */
-                background-color: #fff;
-                border: .05rem solid #fff;
-            }
-
-            html,
-            body {
-                height: 100%;
-                background-color: #333;
-            }
-
-            body {
-                display: -ms-flexbox;
-                display: flex;
-                color: #fff;
-                text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-                box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
-            }
-
-            .cover-container {
-                max-width: 42em;
-            }
-
-            .masthead {
-                margin-bottom: 2rem;
-            }
-
-            .masthead-brand {
-                margin-bottom: 0;
-            }
-
-            .nav-masthead .nav-link {
-                padding: .25rem 0;
-                font-weight: 700;
-                color: rgba(255, 255, 255, .5);
-                background-color: transparent;
-                border-bottom: .25rem solid transparent;
-            }
-
-            .nav-masthead .nav-link:hover,
-            .nav-masthead .nav-link:focus {
-                border-bottom-color: rgba(255, 255, 255, .25);
-            }
-
-            .nav-masthead .nav-link + .nav-link {
-                margin-left: 1rem;
-            }
-
-            .nav-masthead .active {
-                color: #fff;
-                border-bottom-color: #fff;
-            }
-
-            @media (min-width: 48em) {
-                .masthead-brand {
-                    float: left;
-                }
-                .nav-masthead {
-                    float: right;
-                }
-            }
-
-            .cover {
-                padding: 0 1.5rem;
-            }
-
-            .cover .btn-lg {
-                padding: .75rem 1.25rem;
-                font-weight: 700;
-            }
-
-            .mastfoot {
-                color: rgba(255, 255, 255, .5);
-            }
-        </style>
-
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
-
-        <title>黑客社 - Comming Soon</title>
+        <title>黑客社 - 新生茶會</title>
     </head>
 
-    <body class="text-center">
+    <body class="text-center bg-dark text-white">
         <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
             <header class="masthead mb-auto">
+                <br>
                 <div class="inner">
-                    <h3 class="masthead-brand">HackerSir</h3>
-                    <nav class="nav nav-masthead justify-content-center">
-                        <a class="nav-link active" onclick="javascript:outline()">議程</a>
-                        <a class="nav-link active" onclick="javascript:tealocation()">地點</a>
-                        <a class="nav-link active" onclick="javascript:qrcode()">QRcode</a>
-                        <a class="nav-link active" onclick="javascript:rule()">服務條款</a>
-                    </nav>
+                    <h3>HackerSir</h3>
+                    <!--
+                        <nav class="nav nav-masthead justify-content-center">
+                            <a class="nav-link active" onclick="javascript:outline()">議程</a>
+                            <a class="nav-link active" onclick="javascript:tealocation()">地點</a>
+                            <a class="nav-link active" onclick="javascript:qrcode()">QRcode</a>
+                            <a class="nav-link active" onclick="javascript:rule()">服務條款</a>
+                        </nav>
+                    -->
                 </div>
             </header>
             <main role="main" class="inner cover">
-                <h1 class="cover-heading">COMING SOON</h1>
+                <br>
                 <h1 class="cover-heading">新生茶會</h1>
-                <p class="lead">2020/09/21 18：30 ~ 21：00</p>
-                <p class="lead">資電B22</p>
+                <br>
+                <p class="lead">2021/09/23  18:30-21:00</p>
+                <p class="lead">YouTube 線上直播</p>
+                <br>
                 <p class="lead" id="btn"></p>
                 <p class="lead" id="time"></p>
             </main>
@@ -127,13 +44,7 @@
                 <div class="inner">
                     <span class="fab fa-facebook-square text-primary mr-2" style="font-size: 3rem;" onclick="javascript:window.open('https://www.facebook.com/HackerSir.tw/')"></span>
                     <span class="fab fa-instagram text-danger mr-2" style="font-size: 3rem;" onclick="javascript:window.open('https://www.instagram.com/fcu_hackersir/')"></span>
-                </div>
-                <div class="inner my-2">
-                    <span class="badge badge-secondary">
-                        <h3>
-                            <i class="fas fa-users mr-2"></i>填表人數：<span id="people"></span>
-                        </h3>
-                    </span>
+
                 </div>
             </footer>
         </div>
@@ -147,16 +58,16 @@
         <!-- 倒數時間 -->
         <script type="text/javascript">
             // Set the date we're counting down to
-            var teatime = new Date("September 17, 2019 18:30:00").getTime(); //茶會開始時間(結束倒數)
-            var survey = new Date("September 16, 2019 23:50:00").getTime(); //茶會調查結束時間
+            var teatime = new Date("September 23, 2021 18:30:00").getTime(); //茶會開始時間(結束倒數)
+            var survey = new Date("September 22, 2021 12:00:00").getTime(); //茶會調查結束時間
 
             var x = setInterval(function() {
                 var now = new Date().getTime();
 
                 if (survey - now < 0) { // 茶會調查表單結束提交
-                    document.getElementById("btn").innerHTML = '<button class="btn btn-lg btn-success" disabled>'+
+                    document.getElementById("btn").innerHTML = '<button class="btn btn-lg btn-secondary" disabled>'+
                                                                     '<i class="fas fa-pray mr-1"></i>'+
-                                                                    '茶會出席調查結束'+
+                                                                    '茶會報名已截止'+
                                                                 '</button>';
                     var distance = teatime - now;
                     if (distance < 0) {
@@ -171,19 +82,18 @@
                         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                        document.getElementById("time").innerHTML = "茶會倒數<br>" + days + "天 " + hours + "時 " + minutes + "分 " + seconds + "秒 ";
+                        document.getElementById("time").innerHTML = "茶會倒數<br>" + days + " 天 " + hours + " 時 " + minutes + " 分 " + seconds + " 秒";
                     }
                 } else { // 茶會調查表單尚未結束提交
-                    document.getElementById("btn").innerHTML = '<a href="{% url 'enter:attend' %}" class="btn btn-lg btn-success">'+
-                                                                    '<i class="fas fa-pray mr-1"></i>'+
-                                                                    '茶會出席調查'+
+                    document.getElementById("btn").innerHTML = '<a href="https://hackersir.kktix.cc/events/2021-freshmenparty" class="btn btn-lg btn-success" target="_blank">'+
+                                                                    '茶會報名'+
                                                                 '</a>';
                     var distance = survey - now;
                     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
                     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    document.getElementById("time").innerHTML = "出席調查倒數<br>" + days + "天 " + hours + "時 " + minutes + "分 " + seconds + "秒 ";
+                    document.getElementById("time").innerHTML = "茶會報名倒數<br>" + days + " 天 " + hours + " 時 " + minutes + " 分 " + seconds + " 秒";
                 }
             }, 1000);
         </script>
