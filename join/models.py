@@ -76,4 +76,5 @@ class receipt(models.Model):
     """
     紀錄收據的編號
     """
-    count = models.IntegerField()
+    FCUcount = models.IntegerField() # 校內
+    offFCUcount = models.IntegerField() # 校外

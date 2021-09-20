@@ -8,37 +8,47 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
-#import pythoncom
+import pythoncom
 
-def word(name,stID,data,num):
+def word(name, stID, date, num, is_FCU):
     path = 'Receipt'
-    file = os.path.join(path, '黑客社電子收據_社員收執.docx')
-    tpl1 = DocxTemplate(file)
-    file = os.path.join(path, '黑客社電子收據_社團存根.docx')
-    tpl2 = DocxTemplate(file)
+    if is_FCU == 'N': # 校外學生
+        file1 = os.path.join(path, '黑客社電子收據_社員收執_250.docx')
+        file2 = os.path.join(path, '黑客社電子收據_社團存根_250.docx')
+    else:
+        file1 = os.path.join(path, '黑客社電子收據_社員收執.docx')
+        file2 = os.path.join(path, '黑客社電子收據_社團存根.docx')
+    tpl1 = DocxTemplate(file1)
+    tpl2 = DocxTemplate(file2)
     context = {
         'name': name,
         'stID': str(stID),
-        'date': data,
+        'date': date,
         'num': num
     }
-    #pythoncom.CoInitialize() # 加上這行讀取docx時才不會出錯
+    if is_FCU == 'N': # 校外學生
+        filename = "社費_" + name + stID
+    else:
+        filename = "社費_" + stID
+    pythoncom.CoInitialize() # 加上這行讀取docx時才不會出錯
     tpl1.render(context)
-    tpl1.save(os.path.join(path, context['stID'] + '.docx'))
-    convert(os.path.join(path, context['stID'] + '.docx'))
+    tpl1.save(os.path.join(path, filename + '_社員收執.docx'))
+    convert(os.path.join(path, filename + '_社員收執.docx'))
     tpl2.render(context)
-    tpl2.save(os.path.join(path, context['stID'] + '_社團存根' + '.docx'))
-    convert(os.path.join(path, context['stID'] + '_社團存根' + '.docx'))
-    os.remove(os.path.join(path, context['stID'] + '.docx'))
-    os.remove(os.path.join(path, context['stID'] + '_社團存根' + '.docx'))
+    tpl2.save(os.path.join(path, filename + '_社團存根.docx'))
+    convert(os.path.join(path, filename + '_社團存根.docx'))
+    os.remove(os.path.join(path, filename + '_社員收執.docx'))
+    os.remove(os.path.join(path, filename + '_社團存根.docx'))
 
 
 def mail(name, stID):
+    # 外校學生不寄收據
+
     context = {
         'name': name,
         'stID': stID,
-        'date': 'yyyymmdd',
-        'num': '0001'
+        # 'date': 'yyyymmdd',
+        # 'num': '0001'
     }
 
     subject = "逢甲大學黑客社 - 電子收據 " + context['stID']
@@ -58,7 +68,7 @@ def mail(name, stID):
     message.attach(MIMEText(body, "plain"))
 
     path = 'Receipt'
-    filename = context['stID'] + '.pdf'# In same directory as script
+    filename = '社費_' + context['stID'] + '_社員收執.pdf'# In same directory as script
 
       
     # Open PDF file in binary mode

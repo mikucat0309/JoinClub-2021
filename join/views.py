@@ -136,25 +136,34 @@ def send_email(request, id):
     繳費完成後，寄送收據給社員
     '''
     member = get_object_or_404(Member, id=id)
-    if member.is_FCU == 'N':  # 校外學生
-        return redirect('join:review', id)
     path = 'Receipt'
-    file = os.path.join(path, member.nid + '.pdf')
-    print(file)
+    if member.is_FCU == 'N':  # 校外學生
+        file = os.path.join(path, '社費_' + member.name + member.nid + '_社員收執' + '.pdf')
+    else:
+        file = os.path.join(path, '社費_' + member.nid  + '_社員收執' + '.pdf')
+    #print(file)
     if os.path.isfile(file) == False:
         Receipt = receipt.objects.all()
         if len(Receipt) == 0:
-            receipt.objects.create(count=1)
+            receipt.objects.create(FCUcount=0, offFCUcount=0)
             Receipt = receipt.objects.all()
         receiptTmp = Receipt[0]
 
         time_now = timezone.now().strftime("%Y-%m-%d")
-        year = timezone.now().strftime("%Y")
-        # 202110101001
-        # 2021年份 10101入社費會科 001 第一份
-        num = year + "10101" + str(receiptTmp.count).zfill(3)
-        word(member.name, member.nid, time_now, num)
-        receiptTmp.count += 1
+        # year = timezone.now().strftime("%Y")
+        # 校內學生 11010101001
+        # 110年份 10101入社費會科 001 第一份
+        # 校外學生 11010107001 
+        # 110年份 10107教材費 001 第一份
+        if member.is_FCU == 'N':  # 校外學生
+            num = "11010107" + str(receiptTmp.offFCUcount + 1).zfill(3)
+        else:
+            num = "11010101" + str(receiptTmp.FCUcount + 1).zfill(3)
+        word(member.name, member.nid, time_now, num, member.is_FCU)
+        if member.is_FCU == 'N':  # 校外學生
+            receiptTmp.offFCUcount += 1
+        else:
+            receiptTmp.FCUcount += 1
         receiptTmp.save()
     mail(member.name, member.nid)
     return redirect('join:review', id)
