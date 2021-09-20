@@ -24,9 +24,9 @@ def export_all(request):
     response.write(codecs.BOM_UTF8)
     response['Content-Disposition'] = 'attachment; filename="%s"' %(urlquote("社員資料.csv"))
     writer = csv.writer(response)
-    writer.writerow(['姓名', '學號', '系級', '年級', '手機號碼', '電子郵件', '入社狀態'])
+    writer.writerow(['姓名', '學號', '系級', '年級', '手機號碼', '電子郵件', '付款方式', '銀行末五碼', '學校', '外校名稱', 'Discord ID', '社服尺寸', '入社狀態'])
     for member in members:
-        writer.writerow([member.name, member.nid, member.dept, member.level, member.phone, member.email, member.get_status_display()])
+        writer.writerow([member.name, member.nid, member.dept, member.level, member.phone, member.email, member.get_pay_display(), member.bankAccount, member.get_is_FCU_display(), member.school, member.DiscordId, member.get_clothes_display(), member.get_status_display()])
     return response
 
 @login_required
@@ -36,9 +36,9 @@ def export_M(request):
     response.write(codecs.BOM_UTF8)
     response['Content-Disposition'] = 'attachment; filename="%s"' %(urlquote("社員資料(已繳費).csv"))
     writer = csv.writer(response)
-    writer.writerow(['姓名', '學號', '系級', '年級', '手機號碼', '電子郵件', '入社狀態'])
+    writer.writerow(['姓名', '學號', '系級', '年級', '手機號碼', '電子郵件', '付款方式', '銀行末五碼', '學校', '外校名稱', 'Discord ID', '社服尺寸', '入社狀態'])
     for member in members:
-        writer.writerow([member.name, member.nid, member.dept, member.level, member.phone, member.email, member.get_status_display()])
+        writer.writerow([member.name, member.nid, member.dept, member.level, member.phone, member.email, member.get_pay_display(), member.bankAccount, member.get_is_FCU_display(), member.school, member.DiscordId, member.get_clothes_display(), member.get_status_display()])
     return response
 
 @login_required
@@ -48,9 +48,9 @@ def export_NP(request):
     response.write(codecs.BOM_UTF8)
     response['Content-Disposition'] = 'attachment; filename="%s"' %(urlquote("社員資料(未繳費).csv"))
     writer = csv.writer(response)
-    writer.writerow(['姓名', '學號', '系級', '年級', '手機號碼', '電子郵件', '入社狀態'])
+    writer.writerow(['姓名', '學號', '系級', '年級', '手機號碼', '電子郵件', '付款方式', '銀行末五碼', '學校', '外校名稱', 'Discord ID', '社服尺寸', '入社狀態'])
     for member in members:
-        writer.writerow([member.name, member.nid, member.dept, member.level, member.phone, member.email, member.get_status_display()])
+        writer.writerow([member.name, member.nid, member.dept, member.level, member.phone, member.email, member.get_pay_display(), member.bankAccount, member.get_is_FCU_display(), member.school, member.DiscordId, member.get_clothes_display(), member.get_status_display()])
     return response
 
 

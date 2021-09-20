@@ -57,6 +57,7 @@
         <th scope="col">付款方式</th>
         <th scope="col">銀行末五碼</th>
         <th scope="col">Discord ID</th>
+        <th scope="col">社服尺寸</th>
         <th scope="col">入社情況</th>
         <th scope="col">#</th>
         </tr>
@@ -72,6 +73,7 @@
         <td>{{ member.get_pay_display }}</td>
         <td>{{ member.bankAccount }}</td>
         <td>{{ member.DiscordId }}</td>
+        <td>{{ member.get_clothes_display }}</td>
         {% comment %} 已入社 {% endcomment %}
         {% ifequal member.status "M" %}
         <td>

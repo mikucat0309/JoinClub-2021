@@ -43,7 +43,7 @@
                         <p class="card-text">學校：{{ member.get_is_FCU_display }}</p>
                         <p class="card-text">外校名稱：{{ member.school }}</p>
                         <p class="card-text">Discord ID：{{ member.DiscordId }}</p>
-                        <p class="card-text">社服尺寸：{{ member.clothes }}</p>
+                        <p class="card-text">社服尺寸：{{ member.get_clothes_display }}</p>
                     </div>
                     <div class="card-footer">
                         <form class="form-inline" action="{% url 'join:review' id=member.id %}" method="POST">
@@ -88,7 +88,7 @@
                         <p class="card-text">學校：{{ member.get_is_FCU_display }}</p>
                         <p class="card-text">外校名稱：{{ member.school }}</p>
                         <p class="card-text">Discord ID：{{ member.DiscordId }}</p>
-                        <p class="card-text">社服尺寸：{{ member.clothes }}</p>
+                        <p class="card-text">社服尺寸：{{ member.get_clothes_display }}</p>
                     </div>
                     <div class="card-footer">
                         <form class="form-inline" action="{% url 'join:review' id=member.id %}" method="POST">
