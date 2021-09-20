@@ -126,6 +126,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    # BASE_DIR / "static", Django 2.2不支援
+]
 
 # Custom
 from . import views
@@ -134,7 +138,7 @@ CSRF_FAILURE_VIEW = views.csrf_failure
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') # python manage.py collectstatic
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static') # python manage.py collectstatic
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
