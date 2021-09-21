@@ -38,12 +38,6 @@ class Member(models.Model):
         ('2XL', '尺寸 2XL'),
     ]
 
-    CLOTHES_STATUS_CHOICES = [
-        ('N', '不購買'),
-        ('NG', '未領取'),
-        ('G', '已領取'),
-    ]
-
     name = models.CharField(max_length=50)
     nid = models.CharField(max_length=15, unique=True)
     dept = models.CharField(max_length=20)
@@ -58,7 +52,7 @@ class Member(models.Model):
     school = models.CharField(max_length=50, blank=True)
     DiscordId = models.CharField(max_length=50)
     clothes = models.CharField(max_length=4, choices=CLOTHES_CHOICES, default='N')
-    clothes_status = models.CharField(max_length=3, choices=CLOTHES_STATUS_CHOICES, default='N')
+
     def __str__(self):
         return "%s %s [%s]" % (self.nid, self.name, self.get_status_display())
 
