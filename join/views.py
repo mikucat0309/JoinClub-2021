@@ -9,7 +9,7 @@ from .forms import JoinForm, secretForm
 from .models import Member, secret, receipt
 from enter.models import Attend
 from .mail import word, mail
-from django.utils import timezone
+import datetime
 import os
 
 
@@ -136,12 +136,12 @@ def send_email(request, id):
     繳費完成後，寄送收據給社員
     '''
     member = get_object_or_404(Member, id=id)
-    path = 'Receipt'
+    path = os.path.join('Receipt', '社費')
     if member.is_FCU == 'N':  # 校外學生
         file = os.path.join(path, '社費_' + member.name + member.nid + '_社員收執' + '.pdf')
     else:
         file = os.path.join(path, '社費_' + member.nid  + '_社員收執' + '.pdf')
-    #print(file)
+
     if os.path.isfile(file) == False:
         Receipt = receipt.objects.all()
         if len(Receipt) == 0:
@@ -149,7 +149,8 @@ def send_email(request, id):
             Receipt = receipt.objects.all()
         receiptTmp = Receipt[0]
 
-        time_now = timezone.now().strftime("%Y-%m-%d")
+        time_now = datetime.datetime.now().strftime("%Y-%m-%d")
+        
         # year = timezone.now().strftime("%Y")
         # 校內學生 11010101001
         # 110年份 10101入社費會科 001 第一份
@@ -173,12 +174,9 @@ def send_email(request, id):
 def review(request, id):
     member = get_object_or_404(Member, id=id)
     if request.method == 'POST':
-        # if member.status == 'UR':
-        #     member.status = 'NP'
-        #     member.save()
         if member.status == 'NP':
-            member.status = 'M'
             # 狀態改為已入社 順便寄送電子收據
+            member.status = 'M'
             member.save()
             return redirect('join:send_email', id)
     return render(request, 'review.html', {'member': member})

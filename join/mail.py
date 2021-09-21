@@ -31,6 +31,7 @@ def word(name, stID, date, num, is_FCU):
     else:
         filename = "社費_" + stID
     pythoncom.CoInitialize() # 加上這行讀取docx時才不會出錯
+    path = os.path.join(path, '社費')
     tpl1.render(context)
     tpl1.save(os.path.join(path, filename + '_社員收執.docx'))
     convert(os.path.join(path, filename + '_社員收執.docx'))
@@ -67,7 +68,7 @@ def mail(name, stID):
     # Add body to email
     message.attach(MIMEText(body, "plain"))
 
-    path = 'Receipt'
+    path = os.path.join('Receipt', '社費')
     filename = '社費_' + context['stID'] + '_社員收執.pdf'# In same directory as script
 
       
@@ -96,5 +97,3 @@ def mail(name, stID):
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, text)
-
-    os.remove(os.path.join(path, filename))
