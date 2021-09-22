@@ -159,9 +159,13 @@ def send_email(request, id):
             member.save()
         time_now = datetime.datetime.now().strftime("%Y-%m-%d")
         word(member.name, member.nid, time_now, member.receiptNumber, member.is_FCU)
-    mail(member.name, member.nid, member.is_FCU, member.email)
-    member.status = 'M' # 社員狀態改為已入社
+    try:
+        mail(member.name, member.nid, member.is_FCU, member.email)
+    except FileNotFoundError:   # Libre 一次產生大量pdf好像會有BUG 先這樣寫
+        return redirect('join:review', id)
+    member.status = 'M'  # 社員狀態改為已入社
     member.save()
+    
     return redirect('join:review', id)
 
 
@@ -171,8 +175,8 @@ def review(request, id):
     if request.method == 'POST':
         if member.status == 'NP':
             # 先寄送電子收據 再把狀態改為已入社
-            member.status = 'M'
-            member.save()
+            #member.status = 'M'
+            #member.save()
             return redirect('join:send_email', id)
     return render(request, 'review.html', {'member': member})
 
