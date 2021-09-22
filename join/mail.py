@@ -42,21 +42,22 @@ def word(name, stID, date, num, is_FCU):
     os.remove(os.path.join(path, filename + '_社團存根.docx'))
 
 
-def mail(name, stID):
-    # 外校學生不寄收據
+def mail(name, stID, is_FCU, email):
 
     context = {
         'name': name,
         'stID': stID,
-        # 'date': 'yyyymmdd',
-        # 'num': '0001'
+
     }
 
     subject = "逢甲大學黑客社 - 電子收據 " + context['stID']
     body = "若有任何問題，請聯繫黑客社粉絲專頁！"
     sender_email = "cat891127@gmail.com"
-    receiver_email = context['stID'] + "@o365.fcu.edu.tw"
-    password = "891127cat"
+    if is_FCU == 'N':  # 校外學生
+        receiver_email = email
+    else:
+        receiver_email = context['stID'] + "@o365.fcu.edu.tw"
+    password = ""  # 信箱密碼
 
     # Create a multipart message and set headers
     message = MIMEMultipart()

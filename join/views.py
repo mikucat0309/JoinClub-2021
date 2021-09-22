@@ -166,7 +166,7 @@ def send_email(request, id):
         else:
             receiptTmp.FCUcount += 1
         receiptTmp.save()
-    mail(member.name, member.nid)
+    mail(member.name, member.nid, member.is_FCU, member.email)
     return redirect('join:review', id)
 
 
