@@ -23,8 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ae7!w)=)nzb4hvd#s7u1&u#=2w71rm-zt3%=zy2^wa8*zrpu11'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = False
-DEBUG = True
+DEBUG = False
+#DEBUG = True
 
 #ALLOWED_HOSTS = ['join.hackersir.org']
 ALLOWED_HOSTS = ['*']
