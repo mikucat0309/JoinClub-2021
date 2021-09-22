@@ -9,15 +9,22 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
 import pythoncom
+from subprocess import Popen
 
 def word(name, stID, date, num, is_FCU):
     path = 'Receipt'
+    # 校內學生 11010101001
+    # 110年份 10101入社費會科 001 第一份
+    # 校外學生 11010107001
+    # 110年份 10107教材費 001 第一份
     if is_FCU == 'N': # 校外學生
         file1 = os.path.join(path, '黑客社電子收據_社員收執_250.docx')
         file2 = os.path.join(path, '黑客社電子收據_社團存根_250.docx')
+        num = "11010107" + str(num).zfill(3)
     else:
         file1 = os.path.join(path, '黑客社電子收據_社員收執.docx')
         file2 = os.path.join(path, '黑客社電子收據_社團存根.docx')
+        num = "11010101" + str(num).zfill(3)
     tpl1 = DocxTemplate(file1)
     tpl2 = DocxTemplate(file2)
     context = {
@@ -34,12 +41,22 @@ def word(name, stID, date, num, is_FCU):
     path = os.path.join(path, '社費')
     tpl1.render(context)
     tpl1.save(os.path.join(path, filename + '_社員收執.docx'))
-    convert(os.path.join(path, filename + '_社員收執.docx'))
+    #convert(os.path.join(path, filename + '_社員收執.docx'))
+    convert_to_pdf(os.path.join(path, filename + '_社員收執.docx'), path)
     tpl2.render(context)
     tpl2.save(os.path.join(path, filename + '_社團存根.docx'))
-    convert(os.path.join(path, filename + '_社團存根.docx'))
+    #convert(os.path.join(path, filename + '_社團存根.docx'))
+    convert_to_pdf(os.path.join(path, filename + '_社團存根.docx'), path)
     os.remove(os.path.join(path, filename + '_社員收執.docx'))
     os.remove(os.path.join(path, filename + '_社團存根.docx'))
+
+def convert_to_pdf(input_docx, out_folder):
+    LIBRE_OFFICE = r"C:\Program Files\LibreOffice\program\soffice.exe"
+    p = Popen([LIBRE_OFFICE, '--headless', '--convert-to', 'pdf', '--outdir',
+            out_folder, input_docx])
+    #print([LIBRE_OFFICE, '--convert-to', 'pdf', input_docx])
+    p.communicate()
+
 
 
 def mail(name, stID, is_FCU, email):

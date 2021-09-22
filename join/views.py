@@ -143,30 +143,25 @@ def send_email(request, id):
         file = os.path.join(path, '社費_' + member.nid  + '_社員收執' + '.pdf')
 
     if os.path.isfile(file) == False:
-        Receipt = receipt.objects.all()
-        if len(Receipt) == 0:
-            receipt.objects.create(FCUcount=0, offFCUcount=0)
+        if member.receiptNumber == 0:
             Receipt = receipt.objects.all()
-        receiptTmp = Receipt[0]
-
+            if len(Receipt) == 0:
+                receipt.objects.create(FCUcount=0, offFCUcount=0)
+                Receipt = receipt.objects.all()
+            receiptTmp = Receipt[0]
+            if member.is_FCU == 'N':  # 校外學生
+                receiptTmp.offFCUcount += 1
+                member.receiptNumber = receiptTmp.offFCUcount
+            else:
+                receiptTmp.FCUcount += 1
+                member.receiptNumber = receiptTmp.FCUcount
+            receiptTmp.save()
+            member.save()
         time_now = datetime.datetime.now().strftime("%Y-%m-%d")
-        
-        # year = timezone.now().strftime("%Y")
-        # 校內學生 11010101001
-        # 110年份 10101入社費會科 001 第一份
-        # 校外學生 11010107001 
-        # 110年份 10107教材費 001 第一份
-        if member.is_FCU == 'N':  # 校外學生
-            num = "11010107" + str(receiptTmp.offFCUcount + 1).zfill(3)
-        else:
-            num = "11010101" + str(receiptTmp.FCUcount + 1).zfill(3)
-        word(member.name, member.nid, time_now, num, member.is_FCU)
-        if member.is_FCU == 'N':  # 校外學生
-            receiptTmp.offFCUcount += 1
-        else:
-            receiptTmp.FCUcount += 1
-        receiptTmp.save()
+        word(member.name, member.nid, time_now, member.receiptNumber, member.is_FCU)
     mail(member.name, member.nid, member.is_FCU, member.email)
+    member.status = 'M' # 社員狀態改為已入社
+    member.save()
     return redirect('join:review', id)
 
 
@@ -175,7 +170,7 @@ def review(request, id):
     member = get_object_or_404(Member, id=id)
     if request.method == 'POST':
         if member.status == 'NP':
-            # 狀態改為已入社 順便寄送電子收據
+            # 先寄送電子收據 再把狀態改為已入社
             member.status = 'M'
             member.save()
             return redirect('join:send_email', id)

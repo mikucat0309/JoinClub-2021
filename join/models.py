@@ -50,9 +50,9 @@ class Member(models.Model):
     bankAccount = models.CharField(max_length=5, null=True, blank=True)
     is_FCU = models.CharField(max_length=5, choices=SCHOOL_CHOICES,default="Y")
     school = models.CharField(max_length=50, blank=True)
-    DiscordId = models.CharField(max_length=50)
+    DiscordId = models.CharField(max_length=50, null=True)
     clothes = models.CharField(max_length=4, choices=CLOTHES_CHOICES, default='N')
-
+    receiptNumber = models.IntegerField(default=0)  # 收據編號
     def __str__(self):
         return "%s %s [%s]" % (self.nid, self.name, self.get_status_display())
 
