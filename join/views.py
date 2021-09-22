@@ -138,11 +138,13 @@ def send_email(request, id):
     member = get_object_or_404(Member, id=id)
     path = os.path.join('Receipt', '社費')
     if member.is_FCU == 'N':  # 校外學生
-        file = os.path.join(path, '社費_' + member.name + member.nid + '_社員收執' + '.pdf')
+        file1 = os.path.join(path, '社費_' + member.name + member.nid + '_社員收執' + '.pdf')
+        file2 = os.path.join(path, '社費_' + member.name + member.nid + '_社團存根' + '.pdf')
     else:
-        file = os.path.join(path, '社費_' + member.nid  + '_社員收執' + '.pdf')
+        file1 = os.path.join(path, '社費_' + member.nid + '_社員收執' + '.pdf')
+        file2 = os.path.join(path, '社費_' + member.nid + '_社團存根' + '.pdf')
 
-    if os.path.isfile(file) == False:
+    if os.path.isfile(file1) == False or os.path.isfile(file2) == False:
         if member.receiptNumber == 0:
             Receipt = receipt.objects.all()
             if len(Receipt) == 0:
