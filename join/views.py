@@ -110,12 +110,11 @@ def send_email(request, id):
     member = get_object_or_404(Member, id=id)
     path = os.path.join('Receipt', '社費')
     if member.is_FCU == 'N':  # 校外學生
-        file1 = os.path.join(path, '社費_' + member.name + member.nid + '_社員收執' + '.pdf')
-        file2 = os.path.join(path, '社費_' + member.name + member.nid + '_社團存根' + '.pdf')
+        file1 = os.path.join(path, '社員收執', '11010107' + str(member.receiptNumber).zfill(3) + '.pdf')
+        file2 = os.path.join(path, '社團存根', '11010107' + str(member.receiptNumber).zfill(3) + '.pdf')
     else:
-        file1 = os.path.join(path, '社費_' + member.nid + '_社員收執' + '.pdf')
-        file2 = os.path.join(path, '社費_' + member.nid + '_社團存根' + '.pdf')
-
+        file1 = os.path.join(path, '社員收執', '11010101' + str(member.receiptNumber).zfill(3) + '.pdf')
+        file2 = os.path.join(path, '社團存根', '11010101' + str(member.receiptNumber).zfill(3) + '.pdf')
     if os.path.isfile(file1) == False or os.path.isfile(file2) == False:
         if member.receiptNumber == 0:
             Receipt = receipt.objects.all()
@@ -133,13 +132,13 @@ def send_email(request, id):
             member.save()
         time_now = datetime.datetime.now().strftime("%Y-%m-%d")
         word(member.name, member.nid, time_now, member.receiptNumber, member.is_FCU)
+    
     try:
-        mail(member.name, member.nid, member.is_FCU, member.email)
+        mail(member.name, member.nid, member.is_FCU, member.email, member.receiptNumber)
     except FileNotFoundError:   # Libre 一次產生大量pdf好像會有BUG 先這樣寫
         return redirect('join:review', id)
     member.status = 'M'  # 社員狀態改為已入社
     member.save()
-    
     return redirect('join:review', id)
 
 

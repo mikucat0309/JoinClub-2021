@@ -1,3 +1,4 @@
+from join.models import receipt
 from docxtpl import DocxTemplate
 import smtplib
 import ssl
@@ -30,20 +31,20 @@ def word(name, stID, date, num, is_FCU):
         'date': date,
         'num': num
     }
-    if is_FCU == 'N': # 校外學生
-        filename = "社費_" + name + stID
-    else:
-        filename = "社費_" + stID
 
-    path = os.path.join(path, '社費')
+    filename = num
+    father_path = os.path.join(path, '社費')
+    path = os.path.join(father_path, '社員收執')
     tpl1.render(context)
-    tpl1.save(os.path.join(path, filename + '_社員收執.docx'))
-    convert_to_pdf(os.path.join(path, filename + '_社員收執.docx'), path)
+    tpl1.save(os.path.join(path, filename + '.docx'))
+    convert_to_pdf(os.path.join(path, filename + '.docx'), path)
+    os.remove(os.path.join(path, filename + '.docx'))
+
+    path = os.path.join(father_path, '社團存根')
     tpl2.render(context)
-    tpl2.save(os.path.join(path, filename + '_社團存根.docx'))
-    convert_to_pdf(os.path.join(path, filename + '_社團存根.docx'), path)
-    os.remove(os.path.join(path, filename + '_社員收執.docx'))
-    os.remove(os.path.join(path, filename + '_社團存根.docx'))
+    tpl2.save(os.path.join(path, filename + '.docx'))
+    convert_to_pdf(os.path.join(path, filename + '.docx'), path)
+    os.remove(os.path.join(path, filename + '.docx'))
 
 def convert_to_pdf(input_docx, out_folder):
     LIBRE_OFFICE = r"C:\Program Files\LibreOffice\program\soffice.exe"
@@ -53,7 +54,7 @@ def convert_to_pdf(input_docx, out_folder):
 
 
 
-def mail(name, stID, is_FCU, email):
+def mail(name, stID, is_FCU, email, num):
 
     context = {
         'name': name,
@@ -80,8 +81,11 @@ def mail(name, stID, is_FCU, email):
     # Add body to email
     message.attach(MIMEText(body, "plain"))
 
-    path = os.path.join('Receipt', '社費')
-    filename = '社費_' + context['stID'] + '_社員收執.pdf'# In same directory as script
+    path = os.path.join('Receipt', '社費', '社員收執')
+    if is_FCU == 'N':  # 校外學生
+        filename = '11010107' + str(num).zfill(3) + '.pdf'
+    else:
+        filename = '11010101' + str(num).zfill(3) + '.pdf'
 
       
     # Open PDF file in binary mode
