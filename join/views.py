@@ -1,4 +1,3 @@
-from typing import Counter
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -17,11 +16,7 @@ def join(request):
     if request.method == 'POST':
         form = JoinForm(request.POST)
         if form.is_valid():
-            # print(form.data['nid'])
-            
-            # if form.cleaned_data['clothes'] == 'N':
-            #     #form.data['nid'] = 'D0886'
-            #     print('---123---123---')
+
             form.save()
             
             messages.add_message(request, messages.SUCCESS,
@@ -62,9 +57,6 @@ def searchForMember(request):
                 return render(request, 'searchForMember.html', {'result': '無搜尋結果'})
     return render(request, 'searchForMember.html', {})
 
-# TODO 修改requirment doc2pdf
-# TODO 修改注意事項
-
 @login_required
 def search(request):
     """
@@ -78,23 +70,8 @@ def search(request):
                                         Q(dept__icontains=searchTerm) |
                                         Q(phone__icontains=searchTerm) |
                                         Q(email__icontains=searchTerm))
-        # print(members)
         context = {'members': members}
         return render(request, 'join_search.html', context)
-        # nid = request.POST.get('nid')
-        # name = request.POST.get('name')
-        # if nid:
-        #     try:
-        #         member = Member.objects.get(nid=nid)
-        #         return HttpResponseRedirect(reverse('join:review', args=[member.id]))
-        #     except Member.DoesNotExist:
-        #         return render(request, 'join_search.html', {})
-        # elif name:
-        #     try:
-        #         member = Member.objects.get(name=name)
-        #         return HttpResponseRedirect(reverse('join:review', args=[member.id]))
-        #     except Member.DoesNotExist:
-        #         return render(request, 'join_search.html', {})
     return render(request, 'join_search.html', {})
 
 
@@ -105,17 +82,12 @@ def secretSearch(request):
     """
     if request.method == 'POST':
         searchTerm = request.POST.get('searchTerm')
-        # 搜尋對應的學號
-        # secretResult = secret.objects.filter(Q(nid__iexact=searchTerm))
+
 
         # 搜尋大雜燴 一個關鍵字 全部欄位都搜尋
         secrets = secret.objects.filter(Q(name__icontains=searchTerm) |
                                         Q(nid__icontains=searchTerm) |
                                         Q(phone__icontains=searchTerm))
-        # members = []
-        # for s in secrets:
-        #     member = Member.objects.get(nid=s.nid)
-        #     members.append(member)
         try:
             # 條碼機刷學生證會多一位數
             Temp = searchTerm
@@ -177,8 +149,6 @@ def review(request, id):
     if request.method == 'POST':
         if member.status == 'NP':
             # 先寄送電子收據 再把狀態改為已入社
-            #member.status = 'M'
-            #member.save()
             return redirect('join:send_email', id)
     return render(request, 'review.html', {'member': member})
 
@@ -202,6 +172,5 @@ def edit(request, id):
 def view(request):
     M_members = Member.objects.filter(status='M')
     NP_members = Member.objects.filter(status='NP')
-    #UR_members = Member.objects.filter(status='UR')
     attends = Attend.objects.all()
     return render(request, 'view.html', {'M_members': M_members, 'NP_members': NP_members, 'attends': attends})

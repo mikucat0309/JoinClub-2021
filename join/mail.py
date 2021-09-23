@@ -1,6 +1,4 @@
 from docxtpl import DocxTemplate
-from docx2pdf import convert
-import email
 import smtplib
 import ssl
 from email import encoders
@@ -8,7 +6,6 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
-import pythoncom
 from subprocess import Popen
 
 def word(name, stID, date, num, is_FCU):
@@ -37,15 +34,13 @@ def word(name, stID, date, num, is_FCU):
         filename = "社費_" + name + stID
     else:
         filename = "社費_" + stID
-    pythoncom.CoInitialize() # 加上這行讀取docx時才不會出錯
+
     path = os.path.join(path, '社費')
     tpl1.render(context)
     tpl1.save(os.path.join(path, filename + '_社員收執.docx'))
-    #convert(os.path.join(path, filename + '_社員收執.docx'))
     convert_to_pdf(os.path.join(path, filename + '_社員收執.docx'), path)
     tpl2.render(context)
     tpl2.save(os.path.join(path, filename + '_社團存根.docx'))
-    #convert(os.path.join(path, filename + '_社團存根.docx'))
     convert_to_pdf(os.path.join(path, filename + '_社團存根.docx'), path)
     os.remove(os.path.join(path, filename + '_社員收執.docx'))
     os.remove(os.path.join(path, filename + '_社團存根.docx'))
@@ -54,7 +49,6 @@ def convert_to_pdf(input_docx, out_folder):
     LIBRE_OFFICE = r"C:\Program Files\LibreOffice\program\soffice.exe"
     p = Popen([LIBRE_OFFICE, '--headless', '--convert-to', 'pdf', '--outdir',
             out_folder, input_docx])
-    #print([LIBRE_OFFICE, '--convert-to', 'pdf', input_docx])
     p.communicate()
 
 
