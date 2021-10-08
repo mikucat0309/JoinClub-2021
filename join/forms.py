@@ -19,7 +19,7 @@ class JoinForm(ModelForm):
     class Meta:
         model = Member
         fields = ['name', 'nid', 'dept', 'level',
-                  'phone', 'email', 'pay', 'bankAccount', 'is_FCU', 'school', 'DiscordId', 'clothes']
+                  'phone', 'email', 'pay', 'bankAccount', 'is_FCU', 'school', 'DiscordId',]
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '請輸入姓名'}),
             'nid': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '請輸入學號'}),
@@ -32,7 +32,7 @@ class JoinForm(ModelForm):
             'is_FCU': forms.Select(attrs={'class': 'form-control'}),
             'school': forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'schoolHelp', 'placeholder': '如果您不是逢甲大學學生，請輸入您的學校名稱'}),
             'DiscordId': forms.TextInput(attrs={'class': 'form-control', 'aria-describedby': 'DiscodeIdHelp', 'placeholder': '請輸入您的 Discord ID'}),
-            'clothes': forms.Select(attrs={'class': 'form-control'}),
+            # 'clothes': forms.Select(attrs={'class': 'form-control'}),
         }
         labels = {
             'name': _('姓名'),
@@ -46,7 +46,7 @@ class JoinForm(ModelForm):
             'is_FCU': _('學校'),
             'school': _('外校名稱'),
             'DiscordId': _('Discord ID'),
-            'clothes': _('社服尺寸'),
+            # 'clothes': _('社服尺寸'),
         }
         help_texts = {
             'dept': _('例如：資訊一甲'),
@@ -101,10 +101,10 @@ class JoinForm(ModelForm):
             'DiscordId': {
                 'max_length': _('您的 Discord ID 太長囉'),
             },
-            'clothes': {
-                'required': _('必須選擇社服尺寸'),
-                'invalid_choice': _('請勿亂來'),
-            },
+            # 'clothes': {
+            #     'required': _('必須選擇社服尺寸'),
+            #     'invalid_choice': _('請勿亂來'),
+            # },
         }
 
 
