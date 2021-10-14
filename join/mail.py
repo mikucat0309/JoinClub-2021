@@ -8,6 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
 from subprocess import Popen
+from django.conf import settings
 
 def word(name, stID, date, num, is_FCU):
     path = 'Receipt'
@@ -64,12 +65,12 @@ def mail(name, stID, is_FCU, email, num):
 
     subject = "逢甲大學黑客社 - 電子收據 " + context['stID']
     body = "若有任何問題，請聯繫黑客社粉絲專頁！"
-    sender_email = "cat891127@gmail.com"
+    sender_email = settings.EMAIL_SENDER
     if is_FCU == 'N':  # 校外學生
         receiver_email = email
     else:
         receiver_email = context['stID'] + "@o365.fcu.edu.tw"
-    password = ""  # 信箱密碼
+    password = settings.EMAIL_SENDER_PASSWD  # 信箱密碼
 
     # Create a multipart message and set headers
     message = MIMEMultipart()
