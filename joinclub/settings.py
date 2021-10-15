@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+
+# load .env file in order to load "SECRET_KEY" environment variable
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +24,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*!qjxlir1lh)dcyhj2cheq2e!k^bq9@#h1xflze)h0luj6l3lw'
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
+
+# Set email sender for receipt sending
+EMAIL_SENDER=str(os.getenv('EMAIL_SENDER'))
+EMAIL_SENDER_PASSWD=str(os.getenv('EMAIL_SENDER_PASSWD'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False

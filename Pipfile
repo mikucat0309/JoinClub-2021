@@ -11,6 +11,8 @@ sqlparse = "==0.3.0"
 Django = "==2.2.4"
 uwsgi = "*"
 django-import-export = "*"
+docxtpl = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"
