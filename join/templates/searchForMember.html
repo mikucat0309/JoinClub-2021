@@ -68,9 +68,17 @@
                     {% endifequal %}
                 </div>
             </div>
+            
         </h5>
-        
+        {% if member.nid %}
+            <div class="card-body">
+                <div class="col-auto">
+                    <p class="card-text">社服尺寸：{{ member.get_clothes_display }}</p>
+                </div>
+            </div>
+        {% endif %}
         
     </div>
+    
 </div>
 {% endblock %}
