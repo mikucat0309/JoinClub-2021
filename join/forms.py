@@ -106,6 +106,10 @@ class JoinForm(ModelForm):
             #     'invalid_choice': _('請勿亂來'),
             # },
         }
+    def clean_nid(self):
+        # nid欄位全部大寫
+        nid = self.cleaned_data['nid']
+        return nid.upper()
 
 
 class secretForm(ModelForm):
