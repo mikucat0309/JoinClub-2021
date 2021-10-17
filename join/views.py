@@ -18,7 +18,7 @@ def join(request):
         if form.is_valid():
 
             form.save()
-            
+
             messages.add_message(request, messages.SUCCESS,
                                  '提交成功', extra_tags='joinform')
             return HttpResponseRedirect(reverse('index'))
@@ -57,6 +57,7 @@ def searchForMember(request):
                 return render(request, 'searchForMember.html', {'result': '無搜尋結果'})
     return render(request, 'searchForMember.html', {})
 
+
 @login_required
 def search(request):
     """
@@ -69,7 +70,11 @@ def search(request):
                                         Q(nid__icontains=searchTerm) |
                                         Q(dept__icontains=searchTerm) |
                                         Q(phone__icontains=searchTerm) |
-                                        Q(email__icontains=searchTerm))
+                                        #Q(email__icontains=searchTerm) |
+                                        Q(bankAccount__icontains=searchTerm) |
+                                        #Q(DiscordId__icontains=searchTerm) |
+                                        Q(clothes__icontains=searchTerm)
+                                        )
         context = {'members': members}
         return render(request, 'join_search.html', context)
     return render(request, 'join_search.html', {})
@@ -82,7 +87,6 @@ def secretSearch(request):
     """
     if request.method == 'POST':
         searchTerm = request.POST.get('searchTerm')
-
 
         # 搜尋大雜燴 一個關鍵字 全部欄位都搜尋
         secrets = secret.objects.filter(Q(name__icontains=searchTerm) |
@@ -102,6 +106,7 @@ def secretSearch(request):
 
     return render(request, 'secret_search.html', {})
 
+
 @login_required
 def send_email(request, id):
     '''
@@ -110,11 +115,15 @@ def send_email(request, id):
     member = get_object_or_404(Member, id=id)
     path = os.path.join('Receipt', '社費')
     if member.is_FCU == 'N':  # 校外學生
-        file1 = os.path.join(path, '社員收執', '11010107' + str(member.receiptNumber).zfill(3) + '.pdf')
-        file2 = os.path.join(path, '社團存根', '11010107' + str(member.receiptNumber).zfill(3) + '.pdf')
+        file1 = os.path.join(path, '社員收執', '11010107' +
+                             str(member.receiptNumber).zfill(3) + '.pdf')
+        file2 = os.path.join(path, '社團存根', '11010107' +
+                             str(member.receiptNumber).zfill(3) + '.pdf')
     else:
-        file1 = os.path.join(path, '社員收執', '11010101' + str(member.receiptNumber).zfill(3) + '.pdf')
-        file2 = os.path.join(path, '社團存根', '11010101' + str(member.receiptNumber).zfill(3) + '.pdf')
+        file1 = os.path.join(path, '社員收執', '11010101' +
+                             str(member.receiptNumber).zfill(3) + '.pdf')
+        file2 = os.path.join(path, '社團存根', '11010101' +
+                             str(member.receiptNumber).zfill(3) + '.pdf')
     if os.path.isfile(file1) == False or os.path.isfile(file2) == False:
         if member.receiptNumber == 0:
             Receipt = receipt.objects.all()
@@ -131,10 +140,12 @@ def send_email(request, id):
             receiptTmp.save()
             member.save()
         time_now = datetime.datetime.now().strftime("%Y-%m-%d")
-        word(member.name, member.nid, time_now, member.receiptNumber, member.is_FCU)
-    
+        word(member.name, member.nid, time_now,
+             member.receiptNumber, member.is_FCU)
+
     try:
-        mail(member.name, member.nid, member.is_FCU, member.email, member.receiptNumber)
+        mail(member.name, member.nid, member.is_FCU,
+             member.email, member.receiptNumber)
     except FileNotFoundError:   # Libre 一次產生大量pdf好像會有BUG 先這樣寫
         return redirect('join:review', id)
     member.status = 'M'  # 社員狀態改為已入社
