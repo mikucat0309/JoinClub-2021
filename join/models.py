@@ -53,6 +53,7 @@ class Member(models.Model):
     DiscordId = models.CharField(max_length=50, null=True)
     clothes = models.CharField(max_length=4, choices=CLOTHES_CHOICES, default='N')
     receiptNumber = models.IntegerField(default=0)  # 收據編號
+    # created_at = models.DateTimeField(auto_now_add=True) # 入社表單填寫時間 給下一屆用
     def __str__(self):
         return "%s %s [%s]" % (self.nid, self.name, self.get_status_display())
 

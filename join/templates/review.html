@@ -41,6 +41,7 @@
             <p class="card-text">外校名稱：{{ member.school }}</p>
             <p class="card-text">Discord ID：{{ member.DiscordId }}</p>
             <p class="card-text">社服尺寸：{{ member.get_clothes_display }}</p>
+            {% comment %} <p class="card-text">填寫時間：{{ member.created_at }}</p> {% endcomment %}
         </div>
         <div class="card-footer">
             <form class="form-inline" action="{% url 'join:review' id=member.id %}" method="POST">
