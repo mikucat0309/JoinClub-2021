@@ -32,7 +32,6 @@ EMAIL_SENDER_PASSWD=str(os.getenv('EMAIL_SENDER_PASSWD'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-#DEBUG = True
 
 #ALLOWED_HOSTS = ['join.hackersir.org']
 ALLOWED_HOSTS = ['*']
